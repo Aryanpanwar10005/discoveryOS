@@ -7,7 +7,7 @@ from typing import List, Dict, Optional, Any
 from datetime import datetime
 from enum import Enum
 from pydantic import BaseModel, Field
-from model import AtomicInsight, ExtractedContent, InsightType
+from .model import AtomicInsight, ExtractedContent, InsightType
 
 
 class OutputFormat(str, Enum):

@@ -7,7 +7,7 @@ from typing import List, Tuple
 import numpy as np
 from langchain_openai import OpenAIEmbeddings
 from sklearn.metrics.pairwise import cosine_similarity
-from model import AtomicInsight
+from .model import AtomicInsight
 
 
 class SemanticEmbedder:
