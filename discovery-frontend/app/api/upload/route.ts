@@ -2,12 +2,14 @@ import { NextRequest, NextResponse } from "next/server";
 import fs from "fs/promises";
 import path from "path";
 import { spawn } from "child_process";
-import { supabase } from "@/app/lib/supabase"
+import { supabase } from "@/lib/supabase"
 
 export async function POST(req: NextRequest) {
   console.log("Enteredc")
   const formData = await req.formData();
 
+
+  
   const file = formData.get("file") as File;
 
   if (!file) {
