@@ -1,0 +1,17 @@
+{
+  "total": 5,
+  "agents": [
+    { "id": "ag_1", "name": "Ingestion Agent", "role": "Collects & normalizes raw research", "status": "active", "description": "Pulls interviews, surveys and support tickets from connected sources and converts them into a normalized research format.", "lastRunAt": "2026-05-26T08:00:00Z", "itemsProcessedLabel": "128 files processed", "successRate": 99.2, "avgRunTimeSeconds": 42, "icon": "ingestion" },
+    { "id": "ag_2", "name": "Insight Agent", "role": "Extracts insights from research", "status": "active", "description": "Reads normalized research and extracts atomic insights: pain points, feature requests, praise and questions.", "lastRunAt": "2026-05-26T08:02:00Z", "itemsProcessedLabel": "842 insights extracted", "successRate": 97.8, "avgRunTimeSeconds": 118, "icon": "insight" },
+    { "id": "ag_3", "name": "Theme Agent", "role": "Clusters insights into themes", "status": "active", "description": "Groups related insights into recurring themes and tracks how each theme trends sprint over sprint.", "lastRunAt": "2026-05-26T08:05:00Z", "itemsProcessedLabel": "32 themes identified", "successRate": 98.4, "avgRunTimeSeconds": 76, "icon": "theme" },
+    { "id": "ag_4", "name": "Prioritization Agent", "role": "Ranks opportunities by impact", "status": "active", "description": "Scores opportunities using impact, confidence and evidence volume to produce a ranked shortlist.", "lastRunAt": "2026-05-26T08:07:00Z", "itemsProcessedLabel": "12 opportunities ranked", "successRate": 96.5, "avgRunTimeSeconds": 54, "icon": "prioritization" },
+    { "id": "ag_5", "name": "Report Agent", "role": "Generates shareable reports", "status": "active", "description": "Compiles insights, themes and opportunities into polished reports for stakeholders.", "lastRunAt": "2026-05-26T08:09:00Z", "itemsProcessedLabel": "Problem space updated", "successRate": 99.9, "avgRunTimeSeconds": 31, "icon": "report" }
+  ],
+  "pipeline": [
+    { "id": "step_1", "order": 1, "name": "Ingestion Agent", "status": "completed", "detail": "128 files processed" },
+    { "id": "step_2", "order": 2, "name": "Insight Agent", "status": "completed", "detail": "842 insights extracted" },
+    { "id": "step_3", "order": 3, "name": "Theme Agent", "status": "completed", "detail": "32 themes identified" },
+    { "id": "step_4", "order": 4, "name": "Prioritization Agent", "status": "completed", "detail": "12 opportunities ranked" },
+    { "id": "step_5", "order": 5, "name": "Report Agent", "status": "completed", "detail": "Problem space updated" }
+  ]
+}
