@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { Topbar } from "@/components/layout/Topbar";
 import { Card } from "@/components/ui/Card";
-import { UploadModal } from "@/components/ui/UploadModal";
+import { UploadModalEnhanced } from "@/components/ui/UploadModalEnhanced";
 import { getUploadHistory, type UploadHistoryItem } from "@/lib/uploads";
 import { FileText, Download, Trash2, Clock, CheckCircle2, AlertCircle } from "lucide-react";
 
@@ -60,7 +60,7 @@ export default function UploadsPage() {
   return (
     <>
       <Topbar breadcrumb="Upload History" onAction={() => setIsModalOpen(true)} />
-      <UploadModal open={isModalOpen} onClose={() => setIsModalOpen(false)} onUploadComplete={handleUploadComplete} />
+      <UploadModalEnhanced open={isModalOpen} onClose={() => setIsModalOpen(false)} onUploadComplete={handleUploadComplete} />
 
       <main className="flex-1 overflow-y-auto px-6 py-6">
         <div className="mx-auto flex max-w-[1400px] flex-col gap-6">
