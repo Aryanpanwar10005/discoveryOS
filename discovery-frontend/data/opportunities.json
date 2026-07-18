@@ -1,0 +1,13 @@
+{
+  "total": 12,
+  "opportunities": [
+    { "id": "op_1", "rank": 1, "title": "Simplify Checkout Flow", "icon": "checkout", "impact": "Very High", "confidence": 91, "evidenceCount": 132, "description": "Reduce checkout from 6 steps to 2 by combining shipping, billing and review into a single screen.", "usersAffectedPct": 61, "status": "in_review", "createdAt": "2026-05-20T10:00:00Z" },
+    { "id": "op_2", "rank": 2, "title": "Add Guest Checkout", "icon": "guest", "impact": "High", "confidence": 88, "evidenceCount": 98, "description": "Let users complete a purchase without creating an account, with an optional save-details prompt after.", "usersAffectedPct": 47, "status": "planned", "createdAt": "2026-05-19T10:00:00Z" },
+    { "id": "op_3", "rank": 3, "title": "Real-time Delivery Tracking", "icon": "delivery", "impact": "High", "confidence": 85, "evidenceCount": 76, "description": "Integrate live courier GPS data so delivery status reflects actual location, not static milestones.", "usersAffectedPct": 39, "status": "new", "createdAt": "2026-05-18T10:00:00Z" },
+    { "id": "op_4", "rank": 4, "title": "More Payment Options", "icon": "payment", "impact": "Medium", "confidence": 72, "evidenceCount": 54, "description": "Support UPI, wallets and BNPL at checkout to reduce payment-step drop-off.", "usersAffectedPct": 28, "status": "new", "createdAt": "2026-05-17T10:00:00Z" },
+    { "id": "op_5", "rank": 5, "title": "Self-serve Returns Flow", "icon": "returns", "impact": "Medium", "confidence": 69, "evidenceCount": 41, "description": "Add a return-initiation flow inside order history so users don't need to contact support.", "usersAffectedPct": 22, "status": "new", "createdAt": "2026-05-16T10:00:00Z" },
+    { "id": "op_6", "rank": 6, "title": "Size Exchange Without Return", "icon": "returns", "impact": "Medium", "confidence": 64, "evidenceCount": 33, "description": "Allow a direct size swap that ships the new size before the old one is received back.", "usersAffectedPct": 19, "status": "new", "createdAt": "2026-05-15T10:00:00Z" },
+    { "id": "op_7", "rank": 7, "title": "Upfront Shipping Cost Display", "icon": "generic", "impact": "Medium", "confidence": 61, "evidenceCount": 29, "description": "Show shipping fees on the product page instead of only at final checkout.", "usersAffectedPct": 17, "status": "new", "createdAt": "2026-05-14T10:00:00Z" },
+    { "id": "op_8", "rank": 8, "title": "Save Multiple Delivery Addresses", "icon": "generic", "impact": "Low", "confidence": 55, "evidenceCount": 21, "description": "Let small-business users store and switch between office and warehouse addresses.", "usersAffectedPct": 12, "status": "new", "createdAt": "2026-05-13T10:00:00Z" }
+  ]
+}

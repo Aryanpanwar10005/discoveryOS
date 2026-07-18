@@ -1,0 +1,68 @@
+{
+  "user": { "id": "u_1", "name": "Ananya", "role": "Product Manager", "avatarUrl": null },
+  "project": { "id": "p_1", "name": "FitWardrobe", "slug": "fitwardrobe" },
+  "sprintLabel": "This Sprint (May 12 – May 26)",
+  "stats": [
+    { "id": "research", "label": "Total Research Pieces", "value": 128, "helperText": "Interviews, Surveys, Tickets", "delta": "+24 this sprint", "deltaTrend": "up", "icon": "research" },
+    { "id": "insights", "label": "Insights Extracted", "value": 842, "helperText": "Pain points, requests, mentions", "delta": "+15%", "deltaTrend": "up", "icon": "insights" },
+    { "id": "themes", "label": "Themes Identified", "value": 32, "helperText": "Recurring themes", "delta": "+5", "deltaTrend": "up", "icon": "themes" },
+    { "id": "opportunities", "label": "Opportunities", "value": 12, "helperText": "High impact opportunities", "delta": "+3", "deltaTrend": "up", "icon": "opportunities" },
+    { "id": "confidence", "label": "Confidence Score", "value": 87, "helperText": "Overall research confidence", "delta": "", "deltaTrend": "up", "icon": "confidence", "sparkline": [12, 18, 14, 22, 26, 24, 30, 34, 31, 38, 42, 40, 48] }
+  ],
+  "topPainPoints": [
+    { "id": "pp_1", "label": "Checkout is confusing", "mentions": 78, "maxMentions": 78 },
+    { "id": "pp_2", "label": "Slow delivery updates", "mentions": 62, "maxMentions": 78 },
+    { "id": "pp_3", "label": "No guest checkout option", "mentions": 45, "maxMentions": 78 },
+    { "id": "pp_4", "label": "Limited payment options", "mentions": 38, "maxMentions": 78 },
+    { "id": "pp_5", "label": "Returns process is difficult", "mentions": 31, "maxMentions": 78 }
+  ],
+  "painPointMatrix": [
+    { "id": "m_1", "label": "Checkout Confusing", "impact": 88, "frequency": 82, "size": 78, "color": "red" },
+    { "id": "m_2", "label": "Slow Delivery Updates", "impact": 78, "frequency": 58, "size": 62, "color": "orange" },
+    { "id": "m_3", "label": "Returns Process", "impact": 50, "frequency": 22, "size": 31, "color": "blue" },
+    { "id": "m_4", "label": "Limited Payment Options", "impact": 24, "frequency": 34, "size": 38, "color": "purple" },
+    { "id": "m_5", "label": "No Guest Checkout", "impact": 42, "frequency": 76, "size": 45, "color": "green" }
+  ],
+  "recentInsights": [
+    { "id": "ri_1", "type": "pain_point", "title": "Pain Point", "description": "Checkout process has too many steps and users get confused.", "sourceLabel": "Interview #12", "timeAgo": "2 min ago" },
+    { "id": "ri_2", "type": "feature_request", "title": "Feature Request", "description": "Users want a guest checkout option without creating an account.", "sourceLabel": "Survey #45", "timeAgo": "10 min ago" },
+    { "id": "ri_3", "type": "pain_point", "title": "Pain Point", "description": "Users are not getting real-time updates on order delivery.", "sourceLabel": "Support Ticket #1023", "timeAgo": "30 min ago" }
+  ],
+  "topOpportunities": [
+    { "id": "op_1", "rank": 1, "title": "Simplify Checkout Flow", "icon": "checkout", "impact": "Very High", "confidence": 91, "evidenceCount": 132 },
+    { "id": "op_2", "rank": 2, "title": "Add Guest Checkout", "icon": "guest", "impact": "High", "confidence": 88, "evidenceCount": 98 },
+    { "id": "op_3", "rank": 3, "title": "Real-time Delivery Tracking", "icon": "delivery", "impact": "High", "confidence": 85, "evidenceCount": 76 },
+    { "id": "op_4", "rank": 4, "title": "More Payment Options", "icon": "payment", "impact": "Medium", "confidence": 72, "evidenceCount": 54 }
+  ],
+  "insightsBySegment": {
+    "total": 842,
+    "slices": [
+      { "id": "seg_1", "label": "New Users", "pct": 38, "color": "purple" },
+      { "id": "seg_2", "label": "Students", "pct": 25, "color": "blue" },
+      { "id": "seg_3", "label": "Working Professionals", "pct": 20, "color": "green" },
+      { "id": "seg_4", "label": "Small Business", "pct": 10, "color": "orange" },
+      { "id": "seg_5", "label": "Others", "pct": 7, "color": "gray" }
+    ]
+  },
+  "aiRecommendation": {
+    "id": "rec_1",
+    "title": "Simplify Checkout Flow",
+    "impact": "Very High",
+    "summary": "High frequency of users struggling at checkout. Directly affecting conversions.",
+    "confidence": 91,
+    "usersAffectedPct": 61,
+    "evidenceCount": 132,
+    "topEvidence": [
+      { "id": "ev_1", "sourceLabel": "Interview #12", "quote": "The checkout flow is so long...", "sourceType": "interview" },
+      { "id": "ev_2", "sourceLabel": "Survey #45", "quote": "It's confusing and takes time...", "sourceType": "survey" },
+      { "id": "ev_3", "sourceLabel": "Ticket #1023", "quote": "Payment page error and retry...", "sourceType": "ticket" }
+    ]
+  },
+  "agentPipeline": [
+    { "id": "step_1", "order": 1, "name": "Ingestion Agent", "status": "completed", "detail": "128 files processed" },
+    { "id": "step_2", "order": 2, "name": "Insight Agent", "status": "completed", "detail": "842 insights extracted" },
+    { "id": "step_3", "order": 3, "name": "Theme Agent", "status": "completed", "detail": "32 themes identified" },
+    { "id": "step_4", "order": 4, "name": "Prioritization Agent", "status": "completed", "detail": "12 opportunities ranked" },
+    { "id": "step_5", "order": 5, "name": "Report Agent", "status": "completed", "detail": "Problem space updated" }
+  ]
+}

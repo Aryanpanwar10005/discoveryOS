@@ -1,0 +1,12 @@
+{
+  "total": 7,
+  "reports": [
+    { "id": "rp_1", "title": "Sprint Discovery Summary — May 12 to May 26", "summary": "Overview of pain points, opportunities and segment breakdown for the current sprint.", "status": "ready", "createdAt": "2026-05-26T09:00:00Z", "author": "Report Agent", "pages": 14, "format": "pdf", "tags": ["Sprint", "Overview"] },
+    { "id": "rp_2", "title": "Checkout Experience Deep Dive", "summary": "Root-cause analysis of checkout drop-off with evidence from 132 sources.", "status": "ready", "createdAt": "2026-05-24T09:00:00Z", "author": "Report Agent", "pages": 9, "format": "pdf", "tags": ["Checkout", "Deep Dive"] },
+    { "id": "rp_3", "title": "Segment Behaviour: New Users vs Students", "summary": "Comparative insight volume and theme distribution across the two largest segments.", "status": "ready", "createdAt": "2026-05-21T09:00:00Z", "author": "Insight Agent", "pages": 6, "format": "web", "tags": ["Segments"] },
+    { "id": "rp_4", "title": "Delivery & Logistics Pain Points", "summary": "Consolidated view of delivery-tracking complaints across support tickets and calls.", "status": "generating", "createdAt": "2026-05-26T11:20:00Z", "author": "Report Agent", "pages": 0, "format": "pdf", "tags": ["Delivery"] },
+    { "id": "rp_5", "title": "Q2 Opportunity Prioritization Brief", "summary": "Ranked opportunities by impact, confidence and evidence for roadmap planning.", "status": "ready", "createdAt": "2026-05-18T09:00:00Z", "author": "Prioritization Agent", "pages": 11, "format": "docx", "tags": ["Roadmap", "Q2"] },
+    { "id": "rp_6", "title": "Payments Friction Report", "summary": "Analysis of failed and abandoned payments, with recommended method additions.", "status": "failed", "createdAt": "2026-05-15T09:00:00Z", "author": "Report Agent", "pages": 0, "format": "pdf", "tags": ["Payments"] },
+    { "id": "rp_7", "title": "Weekly Research Digest — Week 20", "summary": "Automated weekly rollup of newly ingested research and emerging themes.", "status": "scheduled", "createdAt": "2026-05-28T09:00:00Z", "author": "Report Agent", "pages": 0, "format": "pdf", "tags": ["Digest", "Automated"] }
+  ]
+}
