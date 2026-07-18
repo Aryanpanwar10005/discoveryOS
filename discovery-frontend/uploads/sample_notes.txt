@@ -1,0 +1,6 @@
+Meeting Notes
+
+Project: Discovery AI Date: 2026-07-18
+
+Action Items: - Integrate Python document extraction. - Support PDF,
+DOCX, TXT, CSV. - Send extracted text to the LLM.
