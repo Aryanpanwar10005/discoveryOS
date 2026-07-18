@@ -16,29 +16,33 @@
     "declarationMap": true,
     "sourceMap": true,
     "outDir": "./dist",
+    "rootDir": ".",
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
-      "@core/*": ["packages/core/src/*"],
-      "@ai-engine/*": ["packages/ai-engine/src/*"],
-      "@ingestion/*": ["packages/ingestion/src/*"]
+      "@core/*": ["packages/core/*"]
     },
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
     "isolatedModules": true,
-    "maxNodeModuleJsDepth": 1
+    "maxNodeModuleJsDepth": 1,
+    "composite": true
   },
+  "references": [
+    { "path": "packages/core" },
+    { "path": "packages/ingestion" }
+  ],
   "include": [
-    "src/**/*",
-    "packages/*/src/**/*"
+    "src/**/*"
   ],
   "exclude": [
     "node_modules",
     ".next",
     "dist",
     "build",
-    "coverage"
+    "coverage",
+    "packages"
   ]
 }
