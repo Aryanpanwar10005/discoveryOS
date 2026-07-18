@@ -8,6 +8,8 @@ export async function POST(req: NextRequest) {
   console.log("Enteredc")
   const formData = await req.formData();
 
+
+  
   const file = formData.get("file") as File;
 
   if (!file) {
