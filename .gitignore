@@ -1,0 +1,94 @@
+# Dependencies
+node_modules
+/.pnp
+.pnp.js
+
+# Testing
+/coverage
+/.nyc_output
+/test-results
+
+# Production
+/dist
+/build
+/.next
+/out
+.vercel
+
+# Turbo
+.turbo
+.turborepo
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+.env.example.local
+
+# Editor
+.vscode
+.idea
+*.swp
+*.swo
+*~
+.DS_Store
+*.sublime-workspace
+*.sublime-project
+
+# OS
+Thumbs.db
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Python
+__pycache__
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+.pytest_cache/
+.python-version
+
+# Supabase
+.supabase/
+supabase/.env
+supabase/.env.local
+migrations/
+seed.sql
+
+# Node
+npm-debug.log
+npm-error.log
+yarn-error.log
+pnpm-error.log
+lerna-debug.log
+
+# Logs
+logs
+*.log
+
+# Misc
+.cache
+.eslintcache
+.stylelintcache
