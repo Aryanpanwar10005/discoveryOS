@@ -1,36 +1,128 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# DiscoveryOS
 
-## Getting Started
+**AI-powered Product Discovery Intelligence Platform**
 
-First, run the development server:
+A monorepo-based platform for discovering and analyzing product insights using advanced AI agents and document processing capabilities.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## Technology Stack
+
+- **Monorepo**: [Turborepo](https://turbo.build)
+- **Package Manager**: [pnpm](https://pnpm.io)
+- **Runtime**: [Node.js 18+](https://nodejs.org)
+- **Language**: [TypeScript](https://www.typescriptlang.org)
+- **Web Framework**: [Next.js 15](https://nextjs.org)
+- **Database**: [Supabase](https://supabase.com) (PostgreSQL)
+- **AI**: [LangGraph](https://langchain-ai.github.io/langgraph)
+- **Deployment**: [Vercel](https://vercel.com)
+- **Document Processing**: Python
+
+## Repository Architecture
+
+```
+discoveryos/
+├── apps/
+│   └── web/                 # Next.js application
+├── packages/
+│   ├── ai-engine/           # AI agents and orchestration
+│   │   ├── agents/          # Agent implementations
+│   │   ├── graph/           # LangGraph definitions
+│   │   ├── prompts/         # LLM prompts
+│   │   ├── tools/           # Agent tools
+│   │   └── shared/          # Shared AI utilities
+│   ├── ingestion/           # Document ingestion pipeline
+│   └── core/                # Shared core library
+│       ├── database/        # Database utilities
+│       ├── schemas/         # Data schemas
+│       ├── types/           # Type definitions
+│       └── utils/           # General utilities
+├── python/                  # Python services (document parsing)
+├── supabase/                # Supabase migrations and config
+├── docs/                    # Documentation
+├── tests/                   # Integration tests
+├── scripts/                 # Build and utility scripts
+├── .github/                 # GitHub workflows
+├── pnpm-workspace.yaml      # pnpm workspace config
+├── turbo.json              # Turborepo config
+├── tsconfig.json           # Shared TypeScript config
+├── package.json            # Root package manifest
+├── .env.example            # Environment variables template
+├── .gitignore              # Git exclusions
+└── README.md               # This file
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Installation
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Prerequisites
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Node.js**: Version 18.0.0 or higher
+- **pnpm**: Version 9.0.0 or higher ([install globally](https://pnpm.io/installation))
 
-## Learn More
+### Setup
 
-To learn more about Next.js, take a look at the following resources:
+1. **Install dependencies**:
+   ```bash
+   pnpm install
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+2. **Configure environment**:
+   ```bash
+   cp .env.example .env.local
+   ```
+   Fill in the environment variables with your Supabase and OpenAI credentials.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+3. **Verify workspace**:
+   ```bash
+   pnpm list -r
+   ```
 
-## Deploy on Vercel
+## Development Commands
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+| Command | Description |
+|---------|-------------|
+| `pnpm dev` | Start all development servers in parallel |
+| `pnpm build` | Build all packages and applications |
+| `pnpm lint` | Run linters across the monorepo |
+| `pnpm typecheck` | Run TypeScript type checking |
+| `pnpm format` | Format code with Prettier |
+| `pnpm clean` | Remove build artifacts and node_modules |
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Running Specific Apps/Packages
+
+```bash
+# Run specific package
+pnpm -F @discoveryos/web dev
+
+# Run from package directory
+cd apps/web && pnpm dev
+```
+
+## Workspace Structure
+
+- **`apps/`**: Deployed applications (Next.js frontend)
+- **`packages/`**: Shared libraries and core functionality
+  - **`ai-engine`**: LangGraph-based AI agents and orchestration
+  - **`ingestion`**: Document parsing and ingestion pipeline
+  - **`core`**: Shared types, schemas, and utilities
+- **`python/`**: Python services for document processing
+- **`supabase/`**: Database schema and migrations
+- **`scripts/`**: Build and deployment scripts
+
+## Configuration Files
+
+- **`package.json`**: Root manifest with workspace and shared scripts
+- **`pnpm-workspace.yaml`**: pnpm workspace configuration
+- **`turbo.json`**: Turborepo pipeline and caching rules
+- **`tsconfig.json`**: Shared TypeScript compiler options
+- **`.env.example`**: Environment variables template
+- **`.gitignore`**: Git exclusions
+
+## Contributing
+
+1. Create a feature branch from `main`
+2. Make changes in the relevant package(s)
+3. Run `pnpm typecheck && pnpm lint && pnpm format` before committing
+4. Push and open a pull request
+
+## License
+
+Proprietary — All rights reserved.

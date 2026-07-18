@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import fs from "fs/promises";
 import path from "path";
 import { spawn } from "child_process";
+import { supabase } from "@/app/lib/supabase"
 
 export async function POST(req: NextRequest) {
   console.log("Enteredc")
@@ -40,7 +41,7 @@ export async function POST(req: NextRequest) {
       stderr += data.toString();
     });
 
-    python.on("close", (code) => {
+    python.on("close", async (code) => {
 
       console.log("Exit code:", code);
       console.log("STDOUT:", stdout);
@@ -58,8 +59,31 @@ export async function POST(req: NextRequest) {
         return;
       }
 
+      const result = JSON.parse(stdout);
+      const { data, error } = await supabase
+        .from("extracted")
+        .insert({
+          content: JSON.stringify(result),
+          filetype: file.type,
+        });
+
+      if (error) {
+        resolve(
+          NextResponse.json(
+            { error: error.message },
+            { status: 500 }
+          )
+        );
+        console.log("DATA:", data);
+        console.log("ERROR:", error);
+        return;
+      }
+
       resolve(
-        NextResponse.json(JSON.parse(stdout))
+        NextResponse.json({
+          success: true,
+          extracted: result,
+        })
       );
     });
   });
