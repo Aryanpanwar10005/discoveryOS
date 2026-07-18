@@ -7,7 +7,7 @@ import { insightTypeIconMap } from "@/components/icon-maps";
 import { getInsights } from "@/lib/api";
 import type { InsightType } from "@/types";
 import { useState, useEffect } from "react";
-import { UploadModal } from "@/components/ui/UploadModal";
+import { UploadModalEnhanced } from "@/components/ui/UploadModalEnhanced";
 
 export const dynamic = "force-dynamic";
 
@@ -65,7 +65,7 @@ export default function InsightsPage() {
   return (
     <>
       <Topbar breadcrumb="Insights" onAction={() => setIsModalOpen(true)} />
-      <UploadModal open={isModalOpen} onClose={() => setIsModalOpen(false)} />
+      <UploadModalEnhanced open={isModalOpen} onClose={() => setIsModalOpen(false)} />
 
       <main className="flex-1 overflow-y-auto px-6 py-6">
         <div className="mx-auto flex max-w-[1400px] flex-col gap-6">

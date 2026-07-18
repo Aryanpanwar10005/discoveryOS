@@ -11,7 +11,7 @@ import { AgentPipeline } from "@/components/dashboard/AgentPipeline";
 import { SprintSelector } from "@/components/dashboard/SprintSelector";
 import { getOverview } from "@/lib/api";
 import { useState, useEffect } from "react";
-import { UploadModal } from "@/components/ui/UploadModal";
+import { UploadModalEnhanced } from "@/components/ui/UploadModalEnhanced";
 
 export const dynamic = "force-dynamic";
 
@@ -61,7 +61,7 @@ export default function OverviewPage() {
   return (
     <>
       <Topbar breadcrumb={`${data.project.name} – Product Discovery`} onAction={() => setIsModalOpen(true)} />
-      <UploadModal open={isModalOpen} onClose={() => setIsModalOpen(false)} />
+      <UploadModalEnhanced open={isModalOpen} onClose={() => setIsModalOpen(false)} />
         
 
       <main className="flex-1 overflow-y-auto px-6 py-6">
