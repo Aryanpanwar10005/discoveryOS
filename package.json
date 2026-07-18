@@ -1,0 +1,29 @@
+{
+  "name": "discoveryos",
+  "version": "0.0.1",
+  "private": true,
+  "description": "AI-powered Product Discovery Intelligence Platform",
+  "packageManager": "pnpm@9.0.0",
+  "engines": {
+    "node": ">=18.0.0",
+    "pnpm": ">=9.0.0"
+  },
+  "scripts": {
+    "dev": "turbo run dev --parallel",
+    "build": "turbo run build",
+    "lint": "turbo run lint",
+    "typecheck": "turbo run typecheck",
+    "format": "turbo run format",
+    "clean": "turbo run clean && rm -rf node_modules .turbo",
+    "prepare": "husky install"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "turbo": "^1.10.0",
+    "typescript": "^5.3.0"
+  },
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ]
+}
