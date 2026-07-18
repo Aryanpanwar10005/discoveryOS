@@ -6,7 +6,8 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc",
-    "demo": "node dist/scripts/demo-structured-output.js"
+    "demo": "node dist/scripts/demo-structured-output.js",
+    "test:malformed": "node dist/scripts/test-malformed-output.js"
   },
   "dependencies": {
     "@discoveryos/core": "workspace:*",
