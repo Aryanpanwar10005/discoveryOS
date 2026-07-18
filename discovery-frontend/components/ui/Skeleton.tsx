@@ -1,7 +1,7 @@
 import { cn } from "@/lib/cn";
 
 export function Skeleton({ className }: { className?: string }) {
-  return <div className={cn("animate-pulse rounded-lg bg-ink-100", className)} />;
+  return <div className={cn("skeleton-shimmer rounded-lg", className)} />;
 }
 
 export function CardSkeleton({ className }: { className?: string }) {
@@ -22,8 +22,8 @@ interface EmptyStateProps {
 
 export function EmptyState({ title, description, icon }: EmptyStateProps) {
   return (
-    <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-ink-200 bg-ink-50/50 px-6 py-14 text-center">
-      {icon && <div className="mb-3 text-ink-400">{icon}</div>}
+    <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-ink-200 bg-ink-50/50 px-6 py-14 text-center transition-colors">
+      {icon && <div className="mb-3 animate-float text-ink-400">{icon}</div>}
       <p className="text-[14px] font-semibold text-ink-800">{title}</p>
       <p className="mt-1 max-w-sm text-[13px] text-ink-500">{description}</p>
     </div>
