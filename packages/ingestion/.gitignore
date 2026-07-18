@@ -1,0 +1,13 @@
+# Node
+node_modules/
+*.tsbuildinfo
+
+# Build output
+dist/
+
+# Demo storage (local JSON files for development only)
+.documents/
+
+# Environment
+.env
+.env.local
