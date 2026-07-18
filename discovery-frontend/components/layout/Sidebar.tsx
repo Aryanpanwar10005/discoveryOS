@@ -13,6 +13,7 @@ import {
   Bot,
   ChevronDown,
   CheckCircle2,
+  Upload,
 } from "lucide-react";
 import { cn } from "@/lib/cn";
 
@@ -21,6 +22,7 @@ const primaryNav = [
   { label: "Insights", href: "/insights", icon: BarChart3 },
   { label: "Opportunities", href: "/opportunities", icon: Target },
   { label: "Reports", href: "/reports", icon: FileText },
+  { label: "Uploads", href: "/uploads", icon: Upload },
   { label: "AI Agents", href: "/ai-agents", icon: Bot },
 ];
 

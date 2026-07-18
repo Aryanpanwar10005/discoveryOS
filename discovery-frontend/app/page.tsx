@@ -1,3 +1,4 @@
+"use client"
 import { Topbar } from "@/components/layout/Topbar";
 import { StatCardView } from "@/components/dashboard/StatCardView";
 import { TopPainPoints } from "@/components/dashboard/TopPainPoints";
@@ -9,15 +10,59 @@ import { AiRecommendationCard } from "@/components/dashboard/AiRecommendationCar
 import { AgentPipeline } from "@/components/dashboard/AgentPipeline";
 import { SprintSelector } from "@/components/dashboard/SprintSelector";
 import { getOverview } from "@/lib/api";
+import { useState, useEffect } from "react";
+import { UploadModal } from "@/components/ui/UploadModal";
 
 export const dynamic = "force-dynamic";
 
-export default async function OverviewPage() {
-  const data = await getOverview();
+export default function OverviewPage() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [data, setData] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const result = await getOverview();
+        setData(result);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchData();
+  }, []);
+
+  if (loading) {
+    return (
+      <>
+        <Topbar breadcrumb="Loading..." onAction={() => setIsModalOpen(true)} />
+        <main className="flex-1 overflow-y-auto px-6 py-6">
+          <div className="mx-auto flex max-w-[1400px] flex-col gap-6">
+            <p className="text-ink-500">Loading dashboard...</p>
+          </div>
+        </main>
+      </>
+    );
+  }
+
+  if (!data) {
+    return (
+      <>
+        <Topbar breadcrumb="Error" onAction={() => setIsModalOpen(true)} />
+        <main className="flex-1 overflow-y-auto px-6 py-6">
+          <div className="mx-auto flex max-w-[1400px] flex-col gap-6">
+            <p className="text-danger-700">Failed to load dashboard data</p>
+          </div>
+        </main>
+      </>
+    );
+  }
 
   return (
     <>
-      <Topbar breadcrumb={`${data.project.name} – Product Discovery`} />
+      <Topbar breadcrumb={`${data.project.name} – Product Discovery`} onAction={() => setIsModalOpen(true)} />
+      <UploadModal open={isModalOpen} onClose={() => setIsModalOpen(false)} />
+        
 
       <main className="flex-1 overflow-y-auto px-6 py-6">
         <div className="mx-auto flex max-w-[1400px] flex-col gap-6">
@@ -34,7 +79,7 @@ export default async function OverviewPage() {
           </div>
 
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
-            {data.stats.map((stat) => (
+            {data.stats.map((stat:any) => (
               <StatCardView key={stat.id} stat={stat} />
             ))}
           </div>
