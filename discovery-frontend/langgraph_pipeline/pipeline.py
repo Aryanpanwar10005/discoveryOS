@@ -6,15 +6,15 @@ Coordinates the LangGraph agent with embeddings and deduplication.
 import time
 import json
 from typing import List, Optional, Dict, Any
-from model import (
+from .model import (
     SemanticAnalysisRequest,
     SemanticAnalysisResponse,
     AtomicInsight,
     ExtractedContent,
 )
-from agents import SemanticExtractionAgent
-from embeddings import SemanticEmbedder
-from output import SemanticOutputFormatter, DiscoveryOSResponse
+from .agents import SemanticExtractionAgent
+from .embeddings import SemanticEmbedder
+from .output import SemanticOutputFormatter, DiscoveryOSResponse
 
 
 class SemanticUnderstandingPipeline:
@@ -30,12 +30,24 @@ class SemanticUnderstandingPipeline:
     - DiscoveryOS format output
     """
     
-    def __init__(self, llm_model: str = "gpt-4-turbo-preview"):
-        """Initialize the pipeline."""
-        self.extractor = SemanticExtractionAgent(model_name=llm_model)
+    def __init__(self, llm_model: str = None, model_type: str = "balanced"):
+        """
+        Initialize the pipeline.
+        
+        Args:
+            llm_model: Specific model name (deprecated, use model_type)
+            model_type: Type of model to use ('balanced', 'primary', 'fast')
+        """
+        # Use model_type if provided, otherwise fall back to llm_model
+        if llm_model:
+            self.extractor = SemanticExtractionAgent(api_key=None)
+        else:
+            self.extractor = SemanticExtractionAgent(model_type=model_type)
+        
         self.embedder = SemanticEmbedder()
         self.formatter = SemanticOutputFormatter()
         self.duplicates_removed = 0
+        self.model_type = model_type
     
     def process(self, request: SemanticAnalysisRequest) -> SemanticAnalysisResponse:
         """

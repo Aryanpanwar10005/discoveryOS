@@ -20,7 +20,7 @@ function spawnPython(scriptPath: string, args: string[]): Promise<{ stdout: stri
       stderr += data.toString();
     });
 
-    python.on("close", (code) => {
+    python.on("close", (code:any) => {
       resolve({ stdout, stderr, code });
     });
   });
