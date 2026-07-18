@@ -1,14 +1,58 @@
+"use client";
+
 import { Topbar } from "@/components/layout/Topbar";
 import { Card } from "@/components/ui/Card";
 import { InsightsExplorer } from "@/components/insights/InsightsExplorer";
 import { insightTypeIconMap } from "@/components/icon-maps";
 import { getInsights } from "@/lib/api";
 import type { InsightType } from "@/types";
+import { useState, useEffect } from "react";
+import { UploadModal } from "@/components/ui/UploadModal";
 
 export const dynamic = "force-dynamic";
 
-export default async function InsightsPage() {
-  const data = await getInsights();
+export default function InsightsPage() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [data, setData] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const result = await getInsights();
+        setData(result);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchData();
+  }, []);
+
+  if (loading) {
+    return (
+      <>
+        <Topbar breadcrumb="Insights" onAction={() => setIsModalOpen(true)} />
+        <main className="flex-1 overflow-y-auto px-6 py-6">
+          <div className="mx-auto flex max-w-[1400px] flex-col gap-6">
+            <p className="text-ink-500">Loading insights...</p>
+          </div>
+        </main>
+      </>
+    );
+  }
+
+  if (!data) {
+    return (
+      <>
+        <Topbar breadcrumb="Insights" onAction={() => setIsModalOpen(true)} />
+        <main className="flex-1 overflow-y-auto px-6 py-6">
+          <div className="mx-auto flex max-w-[1400px] flex-col gap-6">
+            <p className="text-danger-700">Failed to load insights</p>
+          </div>
+        </main>
+      </>
+    );
+  }
 
   const counts = data.insights.reduce<Record<InsightType, number>>(
     (acc, insight) => {
@@ -20,7 +64,8 @@ export default async function InsightsPage() {
 
   return (
     <>
-      <Topbar breadcrumb="Insights" actionLabel="Upload Research" />
+      <Topbar breadcrumb="Insights" onAction={() => setIsModalOpen(true)} />
+      <UploadModal open={isModalOpen} onClose={() => setIsModalOpen(false)} />
 
       <main className="flex-1 overflow-y-auto px-6 py-6">
         <div className="mx-auto flex max-w-[1400px] flex-col gap-6">
@@ -55,3 +100,4 @@ export default async function InsightsPage() {
     </>
   );
 }
+

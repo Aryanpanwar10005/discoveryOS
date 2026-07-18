@@ -67,6 +67,7 @@ export async function POST(req: NextRequest) {
         .insert({
           content: JSON.stringify(result),
           filetype: file.type,
+          status:"uploaded"
         });
 
       if (error) {
@@ -89,4 +90,30 @@ export async function POST(req: NextRequest) {
       );
     });
   });
+}
+
+export async function GET(req: NextRequest) {
+  try {
+    const { data, error } = await supabase
+      .from("extracted")
+      .select("*")
+      .order("created_at", { ascending: false });
+
+    if (error) {
+      return NextResponse.json(
+        { error: error.message },
+        { status: 500 }
+      );
+    }
+
+    return NextResponse.json({
+      success: true,
+      rows: data || [],
+    });
+  } catch (err) {
+    return NextResponse.json(
+      { error: "Failed to fetch upload history" },
+      { status: 500 }
+    );
+  }
 }
