@@ -5,6 +5,7 @@ Coordinates the LangGraph agent with embeddings and deduplication.
 
 import time
 import json
+import logging
 from typing import List, Optional, Dict, Any
 from .model import (
     SemanticAnalysisRequest,
@@ -15,6 +16,13 @@ from .model import (
 from .agents import SemanticExtractionAgent
 from .embeddings import SemanticEmbedder
 from .output import SemanticOutputFormatter, DiscoveryOSResponse
+
+# Configure logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+)
+logger = logging.getLogger(__name__)
 
 
 class SemanticUnderstandingPipeline:
@@ -153,6 +161,43 @@ class SemanticUnderstandingPipeline:
         
         extracted_content = analysis_response.extracted_content
         
+        # ============================================================
+        # 📊 CONSOLE OUTPUT BEFORE EMBEDDINGS
+        # ============================================================
+        logger.info("")
+        logger.info("╔" + "═" * 80 + "╗")
+        logger.info("║" + " " * 20 + "SEMANTIC EXTRACTION RESULTS (BEFORE EMBEDDINGS)" + " " * 14 + "║")
+        logger.info("╚" + "═" * 80 + "╝")
+        
+        logger.info("")
+        logger.info("📊 EXTRACTION SUMMARY:")
+        logger.info(f"   ├─ Total Insights Extracted: {len(extracted_content.atomic_insights)}")
+        logger.info(f"   ├─ Processing Time: {analysis_response.processing_time:.2f}s")
+        logger.info(f"   └─ Document ID: {request.document_id}")
+        
+        logger.info("")
+        logger.info("📈 INSIGHTS BY TYPE:")
+        for insight_type, count in extracted_content.insights_by_type.items():
+            logger.info(f"   ├─ {insight_type.upper()}: {count}")
+        
+        logger.info("")
+        logger.info("🔍 FIRST 5 ATOMIC INSIGHTS (Preview):")
+        for idx, insight in enumerate(extracted_content.atomic_insights[:5], 1):
+            logger.info(f"")
+            logger.info(f"   [{idx}] {insight.type.value.upper()}")
+            logger.info(f"       Text: {insight.text[:80]}{'...' if len(insight.text) > 80 else ''}")
+            logger.info(f"       Confidence: {insight.confidence:.2f}")
+            logger.info(f"       Sentiment: {insight.sentiment}")
+        
+        if len(extracted_content.atomic_insights) > 5:
+            logger.info(f"")
+            logger.info(f"   ... and {len(extracted_content.atomic_insights) - 5} more insights")
+        
+        logger.info("")
+        logger.info("⏳ NEXT STEP: Starting embeddings and clustering...")
+        logger.info("")
+        # ============================================================
+        
         # Prepare embeddings summary
         embeddings_summary = {
             "total_embeddings": len(extracted_content.atomic_insights),
@@ -169,6 +214,27 @@ class SemanticUnderstandingPipeline:
             extracted_content,
             embeddings_summary
         )
+        
+        # ============================================================
+        # 📊 CONSOLE OUTPUT AFTER EMBEDDINGS
+        # ============================================================
+        logger.info("")
+        logger.info("╔" + "═" * 80 + "╗")
+        logger.info("║" + " " * 25 + "EMBEDDINGS & CLUSTERING COMPLETE" + " " * 23 + "║")
+        logger.info("╚" + "═" * 80 + "╝")
+        
+        logger.info("")
+        logger.info("🎯 EMBEDDINGS SUMMARY:")
+        logger.info(f"   ├─ Total Embeddings: {embeddings_summary['total_embeddings']}")
+        logger.info(f"   ├─ Unique Insights: {embeddings_summary['unique_insights']}")
+        logger.info(f"   ├─ Duplicates Detected: {embeddings_summary['duplicates_detected']}")
+        logger.info(f"   ├─ Cache Size: {embeddings_summary['cache_size']}")
+        logger.info(f"   └─ Avg Similarity: {embeddings_summary['avg_similarity']:.2f}")
+        
+        logger.info("")
+        logger.info("✅ PIPELINE PROCESSING COMPLETE")
+        logger.info("")
+        # ============================================================
         
         return discovery_os_response
     

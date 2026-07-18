@@ -1,5 +1,5 @@
 """
-LangGraph-based semantic extraction agent with Ollama.
+LangGraph-based semantic extraction agent with OpenRouter API.
 Extracts atomic facts from research text and builds semantic understanding.
 """
 
@@ -10,7 +10,7 @@ import os
 import logging
 from operator import add
 from langgraph.graph import StateGraph, START, END
-from langchain_ollama import ChatOllama
+from langchain_openai import ChatOpenAI
 from langchain_core.messages import HumanMessage, SystemMessage
 from .model import (
     AtomicInsight,
@@ -27,22 +27,22 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-# Ollama Model Configuration
-OLLAMA_CONFIG = {
+# OpenRouter Model Configuration
+OPENROUTER_CONFIG = {
     "primary": {
-        "model": "neural-chat",
-        "base_url": "http://127.0.0.1:11434",
+        "name": "openrouter/anthropic/claude-3-opus",
         "temperature": 0.3,
+        "max_tokens": 2000,
     },
     "fast": {
-        "model": "phi3:mini",
-        "base_url": "http://127.0.0.1:11434",
+        "name": "openrouter/meta-llama/llama-2-70b-chat",
         "temperature": 0.3,
+        "max_tokens": 1500,
     },
-     "balanced": {
-        "model": "phi3:mini",
-        "base_url": "http://127.0.0.1:11434",
+    "balanced": {
+        "name": "openai/gpt-oss-120b",
         "temperature": 0.3,
+        "max_tokens": 2000,
     }
 }
 
@@ -85,59 +85,59 @@ class SemanticExtractionAgent:
     - Fast: Llama-2-70B (faster, lower cost)
     """
     
-    def __init__(self, model_type: str = "balanced", base_url: str = None):
+    def __init__(self, model_type: str = "balanced", api_key: str = None):
         """
-        Initialize the semantic extraction agent with Ollama.
+        Initialize the semantic extraction agent with OpenRouter.
         
         Args:
             model_type: Type of model to use ('primary', 'balanced', 'fast')
-            base_url: Ollama server URL (uses config if not provided)
+            api_key: OpenRouter API key (uses env var if not provided)
         
         Example:
             agent = SemanticExtractionAgent(model_type="balanced")
-        
-        Setup:
-            1. Install Ollama from https://ollama.ai
-            2. Run: ollama serve
-            3. In another terminal: ollama run phi3:mini
         """
         logger.info("=" * 80)
-        logger.info("🚀 INITIALIZING SEMANTIC EXTRACTION AGENT WITH OLLAMA")
+        logger.info("🚀 INITIALIZING SEMANTIC EXTRACTION AGENT")
         logger.info("=" * 80)
         
+        # Get API key
+        self.api_key = api_key or os.getenv("OPENROUTER_API_KEY")
+        if not self.api_key:
+            logger.error("❌ OPENROUTER_API_KEY not found in environment variables")
+            raise ValueError("OPENROUTER_API_KEY environment variable not set")
+        
+        logger.info(f"✅ OpenRouter API key loaded: {self.api_key[:10]}...")
+        
         # Select model configuration
-        if model_type not in OLLAMA_CONFIG:
+        if model_type not in OPENROUTER_CONFIG:
             logger.warning(f"⚠️ Unknown model type '{model_type}', using 'balanced'")
             model_type = "balanced"
         
-        config = OLLAMA_CONFIG[model_type]
-        
-        # Override base_url if provided
-        if base_url:
-            config["base_url"] = base_url
+        config = OPENROUTER_CONFIG[model_type]
         
         logger.info(f"📊 Model Configuration Selected:")
         logger.info(f"   ├─ Type: {model_type}")
-        logger.info(f"   ├─ Model: {config['model']}")
-        logger.info(f"   ├─ Base URL: {config['base_url']}")
-        logger.info(f"   └─ Temperature: {config['temperature']}")
+        logger.info(f"   ├─ Model: {config['name']}")
+        logger.info(f"   ├─ Temperature: {config['temperature']}")
+        logger.info(f"   └─ Max Tokens: {config['max_tokens']}")
         
-        # Initialize ChatOllama
+        # Initialize ChatOpenAI with OpenRouter
+        # OpenRouter uses OpenAI-compatible API with base_url
         try:
-            logger.info("🔌 Connecting to Ollama...")
-            self.llm = ChatOllama(
-                model=config["model"],
-                base_url=config["base_url"],
+            logger.info("🔌 Connecting to OpenRouter API...")
+            self.llm = ChatOpenAI(
+                model=config["name"],
                 temperature=config["temperature"],
+                max_tokens=config["max_tokens"],
+                api_key=self.api_key,
+                base_url="https://openrouter.ai/api/v1",  # OpenRouter endpoint
             )
-            logger.info("✅ Ollama connection successful")
+            logger.info("✅ OpenRouter connection successful")
         except Exception as e:
-            logger.error(f"❌ Failed to connect to Ollama: {str(e)}")
-            logger.error(f"   Make sure Ollama is running: ollama serve")
-            logger.error(f"   And the model is available: ollama run {config['model']}")
+            logger.error(f"❌ Failed to connect to OpenRouter: {str(e)}")
             raise
         
-        self.model_name = config["model"]
+        self.model_name = config["name"]
         self.model_type = model_type
         
         logger.info("🔨 Building LangGraph workflow...")
@@ -575,16 +575,55 @@ Return JSON with: {"duplicates": [indices], "clusters": [[related_indices]]}"""
             logger.info(f"   ├─ Total insights extracted: {final_state['total_insights']}")
             logger.info(f"   ├─ Processing time: {processing_time:.2f}s")
             logger.info(f"   └─ Model used: {self.model_name}")
+            logger.info(final_state)
             
             logger.info("╔" + "═" * 78 + "╗")
             logger.info("║" + " " * 22 + "SEMANTIC ANALYSIS PIPELINE SUCCESS" + " " * 22 + "║")
             logger.info("╚" + "═" * 78 + "╝")
+
+            logger.info("╔" + "═" * 78 + "╗")
+            logger.info("║" + " " * 22 + "SEMANTIC ANALYSIS PIPELINE SUCCESS" + " " * 22 + "║")
+            logger.info("╚" + "═" * 78 + "╝")
+            
+            # =========================================================
+            # 🚀 RESCUE BLOCK: PRINT AND SAVE BEFORE RETURNING 🚀
+            # =========================================================
+            try:
+                import json
+                logger.info("\n\n" + "🔥" * 25)
+                logger.info("   RESCUED INSIGHTS DATA (PRE-CRASH)")
+                logger.info("🔥" * 25)
+                
+                # FIX: Convert custom AtomicInsight objects into standard dictionaries
+                safe_insights = []
+                for insight in final_state["atomic_insights"]:
+                    if hasattr(insight, "model_dump"):     # For Pydantic v2
+                        safe_insights.append(insight.model_dump())
+                    elif hasattr(insight, "dict"):         # For Pydantic v1
+                        safe_insights.append(insight.dict())
+                    else:                                  # For standard Python classes
+                        safe_insights.append(vars(insight))
+                
+                # Print beautifully to your terminal
+                logger.info(json.dumps(safe_insights, indent=2))
+                
+                logger.info("🔥" * 25 + "\n\n")
+                
+                # Save it to a file in your project folder
+                with open("rescued_insights.json", "w") as file:
+                    json.dump(safe_insights, file, indent=2)
+                    
+            except Exception as e:
+                logger.error(f"Failed to print rescued data: {e}")
+            # =========================================================
             
             return SemanticAnalysisResponse(
                 success=True,
                 extracted_content=extracted_content,
                 processing_time=processing_time
             )
+            
+           
         except Exception as e:
             processing_time = time.time() - start_time
             logger.error(f"❌ CRITICAL ERROR: {str(e)}")
