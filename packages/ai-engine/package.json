@@ -1,0 +1,20 @@
+{
+  "name": "@discovery/ai-engine",
+  "version": "0.1.0",
+  "description": "Foundation layer: LLM client, structured output, and prompt utilities for agent orchestration",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "demo": "node dist/scripts/demo-structured-output.js"
+  },
+  "dependencies": {
+    "@discoveryos/core": "workspace:*",
+    "@google/generative-ai": "^0.24.1",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@types/node": "^20.19.43",
+    "typescript": "^5.3.3"
+  }
+}
