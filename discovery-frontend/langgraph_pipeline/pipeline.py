@@ -63,10 +63,10 @@ class SemanticUnderstandingPipeline:
         
         Steps:
         1. Extract atomic facts using LLM
-        2. Embed insights for semantic analysis
-        3. Detect and remove duplicates
-        4. Cluster related insights
-        5. Calculate related insight references
+        2. EMBEDDINGS DISABLED - No semantic analysis
+        3. EMBEDDINGS DISABLED - No duplicate detection
+        4. EMBEDDINGS DISABLED - No clustering
+        5. Return results as-is
         6. Return enriched results
         """
         start_time = time.time()
@@ -80,44 +80,18 @@ class SemanticUnderstandingPipeline:
         extracted_content = extraction_response.extracted_content
         insights = extracted_content.atomic_insights
         
-        # Step 2: Find and deduplicate
-        duplicates = self.embedder.find_duplicates(
-            insights,
-            threshold=0.85
-        )
+        # ⚠️ EMBEDDINGS DISABLED - SKIP ALL EMBEDDING OPERATIONS
+        # This improves performance significantly by avoiding:
+        # - Duplicate detection (embeddings)
+        # - Clustering (embeddings)
+        # - Related insights calculation (embeddings)
         
-        if duplicates:
-            # Remove duplicate indices (keep first occurrence)
-            duplicate_indices = set()
-            for _, dup_idx in duplicates:
-                duplicate_indices.add(dup_idx)
-            
-            self.duplicates_removed = len(duplicate_indices)
-            insights = [
-                insight for idx, insight in enumerate(insights)
-                if idx not in duplicate_indices
-            ]
+        logger.info("")
+        logger.info("⏭️  SKIPPING EMBEDDINGS & CLUSTERING")
+        logger.info(f"   Total insights (no deduplication): {len(insights)}")
+        logger.info("")
         
-        # Step 3: Cluster related insights
-        clusters = self.embedder.cluster_insights(
-            insights,
-            threshold=0.7
-        )
-        
-        # Step 4: Add related insight references
-        for idx, insight in enumerate(insights):
-            # Find which cluster this insight belongs to
-            related_indices = []
-            for cluster in clusters:
-                if idx in cluster:
-                    related_indices = [
-                        str(i) for i in cluster if i != idx
-                    ]
-                    break
-            
-            insight.related_insights = related_indices
-        
-        # Update extracted content with processed insights
+        # Just use insights as-is, no embedding operations
         extracted_content.atomic_insights = insights
         extracted_content.total_insights = len(insights)
         
@@ -162,11 +136,11 @@ class SemanticUnderstandingPipeline:
         extracted_content = analysis_response.extracted_content
         
         # ============================================================
-        # 📊 CONSOLE OUTPUT BEFORE EMBEDDINGS
+        # 📊 CONSOLE OUTPUT - EXTRACTION RESULTS (NO EMBEDDINGS)
         # ============================================================
         logger.info("")
         logger.info("╔" + "═" * 80 + "╗")
-        logger.info("║" + " " * 20 + "SEMANTIC EXTRACTION RESULTS (BEFORE EMBEDDINGS)" + " " * 14 + "║")
+        logger.info("║" + " " * 20 + "✅ SEMANTIC EXTRACTION RESULTS (EMBEDDINGS DISABLED)" + " " * 8 + "║")
         logger.info("╚" + "═" * 80 + "╝")
         
         logger.info("")
@@ -194,45 +168,49 @@ class SemanticUnderstandingPipeline:
             logger.info(f"   ... and {len(extracted_content.atomic_insights) - 5} more insights")
         
         logger.info("")
-        logger.info("⏳ NEXT STEP: Starting embeddings and clustering...")
+        logger.info("✅ SKIPPING EMBEDDINGS (DISABLED FOR PERFORMANCE)")
         logger.info("")
         # ============================================================
         
-        # Prepare embeddings summary
-        embeddings_summary = {
+        # ⚠️ EMBEDDINGS DISABLED - SKIP ALL EMBEDDING OPERATIONS
+        # Just return the formatted response directly
+        
+        # Prepare simple summary (no embeddings)
+        summary = {
+            "embeddings_enabled": False,
+            "total_insights": len(extracted_content.atomic_insights),
             "total_embeddings": len(extracted_content.atomic_insights),
-            "unique_insights": len(set(i.text for i in extracted_content.atomic_insights)),
-            "clusters_found": 0,  # Will be calculated by formatter
-            "duplicates_detected": self.duplicates_removed,
-            "avg_similarity": 0.72,
-            "cache_size": len(self.embedder.embed_cache),
-            "processing_time": analysis_response.processing_time
+            "unique_insights": len(extracted_content.atomic_insights),
+            "clusters_found": 0,
+            "duplicates_detected": 0,
+            "avg_similarity": 0.0,
+            "cache_size": 0,
+            "processing_time": analysis_response.processing_time,
         }
         
         # Format to DiscoveryOS structure
         discovery_os_response = self.formatter.format_discovery_os(
             extracted_content,
-            embeddings_summary
+            summary
         )
         
         # ============================================================
-        # 📊 CONSOLE OUTPUT AFTER EMBEDDINGS
+        # 📊 CONSOLE OUTPUT - FINAL STATUS
         # ============================================================
         logger.info("")
         logger.info("╔" + "═" * 80 + "╗")
-        logger.info("║" + " " * 25 + "EMBEDDINGS & CLUSTERING COMPLETE" + " " * 23 + "║")
+        logger.info("║" + " " * 25 + "✅ PIPELINE PROCESSING COMPLETE" + " " * 23 + "║")
         logger.info("╚" + "═" * 80 + "╝")
         
         logger.info("")
-        logger.info("🎯 EMBEDDINGS SUMMARY:")
-        logger.info(f"   ├─ Total Embeddings: {embeddings_summary['total_embeddings']}")
-        logger.info(f"   ├─ Unique Insights: {embeddings_summary['unique_insights']}")
-        logger.info(f"   ├─ Duplicates Detected: {embeddings_summary['duplicates_detected']}")
-        logger.info(f"   ├─ Cache Size: {embeddings_summary['cache_size']}")
-        logger.info(f"   └─ Avg Similarity: {embeddings_summary['avg_similarity']:.2f}")
+        logger.info("🎯 FINAL SUMMARY:")
+        logger.info(f"   ├─ Total Insights: {summary['total_insights']}")
+        logger.info(f"   ├─ Processing Time: {summary['processing_time']:.2f}s")
+        logger.info(f"   ├─ Embeddings: {'🚫 DISABLED' if not summary['embeddings_enabled'] else '✅ ENABLED'}")
+        logger.info(f"   └─ Status: ✅ SUCCESS")
         
         logger.info("")
-        logger.info("✅ PIPELINE PROCESSING COMPLETE")
+        logger.info("📤 Returning JSON response to API")
         logger.info("")
         # ============================================================
         

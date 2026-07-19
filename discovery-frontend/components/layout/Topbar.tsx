@@ -2,6 +2,7 @@
 
 import { Bell, HelpCircle, ChevronDown, Plus } from "lucide-react";
 import { Button } from "@/components/ui/Button";
+import { ProjectSwitcher } from "@/components/project-switcher";
 import type { ReactNode } from "react";
 import {useState} from "react"
 

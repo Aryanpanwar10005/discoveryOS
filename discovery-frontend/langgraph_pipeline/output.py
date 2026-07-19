@@ -75,28 +75,31 @@ class PipelineStep(BaseModel):
 
 
 class EmbeddingsSummary(BaseModel):
-    """Embeddings analysis summary."""
-    total_embeddings: int
-    unique_insights: int
-    clusters_found: int
-    duplicates_detected: int
-    avg_similarity: float
-    cache_size: int
-    processing_time: float
+    embeddings_enabled: bool = True
 
-
+    total_embeddings: int = 0
+    unique_insights: int = 0
+    clusters_found: int = 0
+    duplicates_detected: int = 0
+    avg_similarity: float = 0.0
+    cache_size: int = 0
+    processing_time: float = 0.0
+    
 class DiscoveryOSResponse(BaseModel):
-    """Complete DiscoveryOS format response."""
     metadata: Dict[str, Any] = Field(default_factory=dict)
+
     agents: List[AgentInfo] = Field(default_factory=list)
     pipeline: List[PipelineStep] = Field(default_factory=list)
     dashboard: Dict[str, Any] = Field(default_factory=dict)
+
     insights: List[AtomicInsightFormatted] = Field(default_factory=list)
     themes: List[InsightTheme] = Field(default_factory=list)
     opportunities: List[Dict[str, Any]] = Field(default_factory=list)
     reports: List[Dict[str, Any]] = Field(default_factory=list)
-    embeddings_summary: EmbeddingsSummary = Field(default_factory=dict)
-    validation: ValidationResult = Field(default_factory=dict)
+
+    embeddings_summary: Optional[EmbeddingsSummary] = None
+    validation: Optional[ValidationResult] = None
+
     status: str = "success"
 
 

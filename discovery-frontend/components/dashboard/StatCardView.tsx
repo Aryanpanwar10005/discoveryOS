@@ -22,7 +22,7 @@ export function StatCardView({ stat }: { stat: StatCardType }) {
       <div className="flex items-end justify-between gap-3">
         <div>
           <p className="text-[26px] font-bold leading-none tracking-tight text-ink-900">
-            {stat.value.toLocaleString()}
+            {stat.value?.toLocaleString()}
             {stat.id === "confidence" ? "%" : ""}
           </p>
           <p className="mt-1.5 text-[12.5px] text-ink-500">{stat.helperText}</p>

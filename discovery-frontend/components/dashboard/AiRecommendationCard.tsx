@@ -17,23 +17,23 @@ export function AiRecommendationCard({ data }: { data: AiRecommendation }) {
 
       <div className="rounded-xl border border-warning-50 bg-warning-50/60 p-4">
         <div className="mb-1.5 flex items-center justify-between gap-2">
-          <p className="text-[14px] font-semibold text-ink-900">{data.title}</p>
-          <ImpactBadge impact={data.impact} />
+          <p className="text-[14px] font-semibold text-ink-900">{data?.title}</p>
+          <ImpactBadge impact={data?.impact} />
         </div>
-        <p className="text-[13px] leading-snug text-ink-600">{data.summary}</p>
+        <p className="text-[13px] leading-snug text-ink-600">{data?.summary}</p>
 
         <div className="mt-4 grid grid-cols-3 gap-2 border-t border-warning-100/70 pt-3">
           <div>
             <p className="text-[11px] text-ink-500">Confidence</p>
-            <p className="text-[14px] font-semibold text-ink-900">{data.confidence}%</p>
+            <p className="text-[14px] font-semibold text-ink-900">{data?.confidence}%</p>
           </div>
           <div>
             <p className="text-[11px] text-ink-500">Users Affected</p>
-            <p className="text-[14px] font-semibold text-ink-900">{data.usersAffectedPct}%</p>
+            <p className="text-[14px] font-semibold text-ink-900">{data?.usersAffectedPct}%</p>
           </div>
           <div>
             <p className="text-[11px] text-ink-500">Evidence</p>
-            <p className="text-[14px] font-semibold text-ink-900">{data.evidenceCount}</p>
+            <p className="text-[14px] font-semibold text-ink-900">{data?.evidenceCount}</p>
           </div>
         </div>
       </div>
@@ -41,7 +41,7 @@ export function AiRecommendationCard({ data }: { data: AiRecommendation }) {
       <div className="mt-4">
         <p className="mb-2 text-[12.5px] font-semibold text-ink-700">Top Evidence</p>
         <ul className="flex flex-col gap-2">
-          {data.topEvidence.map((ev) => (
+          {data?.topEvidence?.map((ev) => (
             <li key={ev.id} className="flex items-center gap-2 text-[13px]">
               <FileText size={14} className="shrink-0 text-brand-500" />
               <span className="font-medium text-ink-700">{ev.sourceLabel}</span>

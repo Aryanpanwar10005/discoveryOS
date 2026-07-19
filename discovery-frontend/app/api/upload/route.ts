@@ -20,7 +20,7 @@ function spawnPython(scriptPath: string, args: string[]): Promise<{ stdout: stri
       stderr += data.toString();
     });
 
-    python.on("close", (code:any) => {
+    python.on("close", (code: any) => {
       resolve({ stdout, stderr, code });
     });
   });
@@ -51,10 +51,14 @@ export async function POST(req: NextRequest) {
       [filePath]
     );
 
-    if (extractResult.stderr) {
-      console.error("Extract error:", extractResult.stderr);
+    if (extractResult.code !== 0) {
+      console.error(extractResult.stderr);
+
       return NextResponse.json(
-        { success: false, error: "Text extraction failed: " + extractResult.stderr },
+        {
+          success: false,
+          error: extractResult.stderr,
+        },
         { status: 500 }
       );
     }
@@ -76,10 +80,14 @@ export async function POST(req: NextRequest) {
       [extractedText, file.name.replace(/\.[^.]+$/, ""), "auto"]
     );
 
-    if (semanticResult.stderr) {
-      console.error("Semantic analysis error:", semanticResult.stderr);
+    if (semanticResult.code !== 0) {
+      console.error(semanticResult.stderr);
+
       return NextResponse.json(
-        { success: false, error: "Semantic analysis failed: " + semanticResult.stderr },
+        {
+          success: false,
+          error: semanticResult.stderr,
+        },
         { status: 500 }
       );
     }
@@ -95,45 +103,85 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    if (!semanticAnalysis.success) {
+    if (semanticAnalysis.status !== "success") {
       return NextResponse.json(
-        { success: false, error: semanticAnalysis.error },
+        {
+          success: false,
+          error: semanticAnalysis.error ?? "Semantic analysis failed",
+        },
         { status: 500 }
       );
     }
 
-    console.log("Semantic analysis successful, insights:", semanticAnalysis.data.dashboard.total_insights);
-
+    console.log(
+      "Semantic analysis successful, insights:",
+      semanticAnalysis.dashboard?.total_insights ?? 0
+    );
     // Step 3: Store in database
-    console.log("Step 3: Storing in database...");
+    console.log("Step 3: Storing analysis results in database...");
+
+    const documentId = `doc_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+
     const { data, error } = await supabase
       .from("extracted")
       .insert({
-        content: JSON.stringify(semanticAnalysis.data),
-        filetype: file.type,
-        status: "processed",
+        // File metadata
         filename: file.name,
-        processing_time: semanticAnalysis.processing_time
+        filetype: file.type || "unknown",
+        file_size_bytes: bytes.length,
+
+        // Document info
+        document_id: documentId,
+        raw_text: extractedText,
+        raw_text_length: extractedText.length,
+
+        // Complete analysis JSON (storing the entire DiscoveryOS response)
+        analysis_results: semanticAnalysis,
+
+        // Processing info
+        processing_time_seconds: semanticAnalysis.processing_time || 0,
+        model_used: semanticAnalysis.metadata?.model_used || "unknown",
+        model_type: semanticAnalysis.metadata?.model_type || "balanced",
+
+        // Status
+        status: semanticAnalysis.status === "success" ? "completed" : "error",
+        error_message: semanticAnalysis.error || null,
+        processed_at: new Date().toISOString(),
+
+        // Metadata
+        metadata: {
+          source: "api_upload",
+          version: "1.0",
+          insights_count: semanticAnalysis.dashboard?.total_insights ?? 0,
+          insight_types: semanticAnalysis.dashboard?.insights_by_type ?? {}
+        }
       })
       .select();
 
     if (error) {
-      console.error("Database insert error:", error);
+      console.error("❌ Database insert error:", error);
       return NextResponse.json(
         { error: "Failed to store results: " + error.message },
         { status: 500 }
       );
     }
 
-    console.log("Successfully stored in database");
+    console.log("✅ Successfully stored in database");
+    console.log(`   Document ID: ${documentId}`);
+    console.log(
+      `   Insights: ${semanticAnalysis.dashboard?.total_insights ?? 0}`
+    );
+    console.log(`   Processing time: ${semanticAnalysis.processing_time}s`);
 
     // Step 4: Return response
     return NextResponse.json({
       success: true,
-      extracted: semanticAnalysis.data,
+      extracted: semanticAnalysis,
       document_id: data?.[0]?.id,
-      insights_count: semanticAnalysis.data.dashboard.total_insights,
-      processing_time: semanticAnalysis.processing_time
+      document_reference_id: documentId,
+      insights_count: semanticAnalysis.dashboard?.total_insights ?? 0,
+      processing_time: semanticAnalysis.processing_time,
+      status: "completed",
     });
 
   } catch (error) {
@@ -142,6 +190,7 @@ export async function POST(req: NextRequest) {
       { error: "Unexpected error: " + String(error) },
       { status: 500 }
     );
+
   }
 }
 
