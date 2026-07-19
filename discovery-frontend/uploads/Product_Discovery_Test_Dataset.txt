@@ -1,0 +1,59 @@
+Product Discovery Research Dataset – FitWardrobe
+
+Project
+
+FitWardrobe e-commerce platform
+
+Interview 1 – New User
+
+“I had to click through too many checkout screens. I almost gave up.” “I
+wish I could checkout as a guest.” “The onboarding quiz was excellent.”
+
+Interview 2 – Student
+
+“Shipping charges only appeared at the final step.” “I use UPI but it
+wasn’t available.”
+
+Support Ticket #1023
+
+“Payment failed twice with no error.” “Tracking hasn’t updated in two
+days.”
+
+Survey Responses
+
+-   41 users requested UPI.
+-   38 users requested guest checkout.
+-   31 users said returns are confusing.
+-   27 users wanted multiple delivery addresses.
+
+Call Notes
+
+Question: “Do prices include GST?” Question: “Can I exchange size
+without returning?”
+
+Reviews
+
+★★★★★ “Love the onboarding recommendations.” ★★☆☆☆ “Checkout is too
+long.” ★★☆☆☆ “Delivery updates are inaccurate.”
+
+Segments
+
+New Users, Students, Working Professionals, Small Business
+
+Evidence Summary
+
+Checkout complaints: 78 Delivery complaints: 62 Guest checkout requests:
+45 Payment complaints: 38 Returns complaints: 31
+
+Opportunities
+
+1.  Simplify Checkout (Very High)
+2.  Guest Checkout (High)
+3.  Real-time Delivery Tracking (High)
+4.  UPI & Wallet Payments (Medium)
+5.  Self-service Returns (Medium)
+
+Reports
+
+Sprint: May 12–26 Research pieces: 128 Insights expected: ~800+ Themes:
+Checkout, Payments, Delivery, Returns, Onboarding, Pricing

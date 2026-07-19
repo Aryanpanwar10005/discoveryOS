@@ -1,14 +1,97 @@
+"use client";
+
 import { Topbar } from "@/components/layout/Topbar";
+import { ProjectSwitcher } from "@/components/project-switcher";
 import { Card } from "@/components/ui/Card";
 import { InsightsExplorer } from "@/components/insights/InsightsExplorer";
 import { insightTypeIconMap } from "@/components/icon-maps";
 import { getInsights } from "@/lib/api";
-import type { InsightType } from "@/types";
+import { useCurrentProject } from "@/lib/project-context";
+import type { InsightType, InsightsResponse } from "@/types";
+import { useState, useEffect } from "react";
+import { UploadModalEnhanced } from "@/components/ui/UploadModalEnhanced";
+
+import { CardSkeleton, Skeleton } from "@/components/ui/Skeleton";
+import { FadeIn } from "@/components/ui/FadeIn";
+import { AlertTriangle, RefreshCw } from "lucide-react";
 
 export const dynamic = "force-dynamic";
 
-export default async function InsightsPage() {
-  const data = await getInsights();
+export default function InsightsPage() {
+  const { projectId } = useCurrentProject();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [data, setData] = useState<InsightsResponse | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  async function fetchData() {
+    try {
+      setLoading(true);
+      const result = await getInsights();
+      setData(result);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  useEffect(() => {
+    fetchData();
+  }, [projectId]);
+
+  if (loading) {
+    return (
+      <>
+        <Topbar breadcrumb="Insights" onAction={() => setIsModalOpen(true)} />
+        <main className="flex-1 overflow-y-auto px-6 py-6">
+          <div className="mx-auto flex max-w-[1400px] flex-col gap-6">
+            <div>
+              <Skeleton className="h-6 w-40" />
+              <Skeleton className="mt-2 h-4 w-72" />
+            </div>
+            <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+              {Array.from({ length: 4 }).map((_, i) => (
+                <CardSkeleton key={i} className="h-[76px]" />
+              ))}
+            </div>
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+              {Array.from({ length: 6 }).map((_, i) => (
+                <CardSkeleton key={i} className="h-40" />
+              ))}
+            </div>
+          </div>
+        </main>
+      </>
+    );
+  }
+
+  if (!data) {
+    return (
+      <>
+        <Topbar breadcrumb="Insights" onAction={() => setIsModalOpen(true)} />
+        <main className="flex-1 overflow-y-auto px-6 py-6">
+          <div className="mx-auto flex max-w-[1400px] flex-col gap-6">
+            <FadeIn>
+              <Card className="flex flex-col items-center gap-3 py-14 text-center">
+                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-danger-50">
+                  <AlertTriangle size={22} className="text-danger-500" />
+                </div>
+                <div>
+                  <p className="text-[15px] font-semibold text-ink-900">Failed to load insights</p>
+                  <p className="mt-1 text-[13px] text-ink-500">We couldn&apos;t reach your research data just now.</p>
+                </div>
+                <button
+                  onClick={fetchData}
+                  className="mt-1 inline-flex items-center gap-1.5 rounded-xl bg-brand-600 px-4 py-2 text-[13.5px] font-medium text-white shadow-[0_4px_10px_rgba(90,70,224,0.25)] transition-all hover:bg-brand-500 active:scale-[0.97]"
+                >
+                  <RefreshCw size={14} />
+                  Try again
+                </button>
+              </Card>
+            </FadeIn>
+          </div>
+        </main>
+      </>
+    );
+  }
 
   const counts = data.insights.reduce<Record<InsightType, number>>(
     (acc, insight) => {
@@ -20,36 +103,51 @@ export default async function InsightsPage() {
 
   return (
     <>
-      <Topbar breadcrumb="Insights" actionLabel="Upload Research" />
+      <Topbar breadcrumb="Insights" onAction={() => setIsModalOpen(true)} />
+      <UploadModalEnhanced open={isModalOpen} onClose={() => setIsModalOpen(false)} />
 
       <main className="flex-1 overflow-y-auto px-6 py-6">
         <div className="mx-auto flex max-w-[1400px] flex-col gap-6">
-          <div>
-            <h1 className="text-[22px] font-bold text-ink-900">Insights</h1>
-            <p className="mt-1 text-[13.5px] text-ink-500">
-              {data.total.toLocaleString()} insights extracted from your research, sorted by recency
-            </p>
-          </div>
+          <FadeIn>
+            <div className="flex items-center justify-between">
+              <div>
+                <h1 className="text-[22px] font-bold tracking-tight text-ink-900">Insights</h1>
+                <p className="mt-1 text-[13.5px] text-ink-500">
+                  <span className="font-semibold text-brand-600">{data.total?.toLocaleString()}</span> insights extracted
+                  from your research, sorted by recency
+                </p>
+              </div>
+              <ProjectSwitcher />
+            </div>
+          </FadeIn>
 
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
-            {(Object.keys(counts) as InsightType[]).map((type) => {
+            {(Object.keys(counts) as InsightType[]).map((type, i) => {
               const iconEntry = insightTypeIconMap[type];
-              const Icon = iconEntry.icon;
+              // Safely handle missing icon entries
+              if (!iconEntry) return null;
+              const Icon = iconEntry?.icon;
               return (
-                <Card key={type} className="flex items-center gap-3">
-                  <div className={`flex h-9 w-9 items-center justify-center rounded-lg ${iconEntry.bg}`}>
-                    <Icon size={17} className={iconEntry.fg} />
-                  </div>
-                  <div>
-                    <p className="text-[19px] font-bold leading-none text-ink-900">{counts[type]}</p>
-                    <p className="mt-0.5 text-[12px] text-ink-500">{iconEntry.label}</p>
-                  </div>
-                </Card>
+                <FadeIn key={type} delay={i * 60}>
+                  <Card className="group flex items-center gap-3 transition-all duration-200 hover:-translate-y-0.5">
+                    <div
+                      className={`flex h-9 w-9 items-center justify-center rounded-lg ${iconEntry.bg} transition-transform duration-200 group-hover:scale-110`}
+                    >
+                      <Icon size={17} className={iconEntry.fg} />
+                    </div>
+                    <div>
+                      <p className="text-[19px] font-bold leading-none text-ink-900">{counts[type]}</p>
+                      <p className="mt-0.5 text-[12px] text-ink-500">{iconEntry.label}</p>
+                    </div>
+                  </Card>
+                </FadeIn>
               );
             })}
           </div>
 
-          <InsightsExplorer insights={data.insights} />
+          <FadeIn delay={140}>
+            <InsightsExplorer insights={data.insights} />
+          </FadeIn>
         </div>
       </main>
     </>

@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { ArrowUpDown } from "lucide-react";
+import { ArrowUpDown, HelpCircle } from "lucide-react";
 import { Card } from "@/components/ui/Card";
 import { Badge, ImpactBadge } from "@/components/ui/Badge";
 import { opportunityIconMap } from "@/components/icon-maps";
@@ -62,14 +62,22 @@ export function OpportunitiesBoard({ opportunities }: { opportunities: Opportuni
 
       <div className="flex flex-col gap-3">
         {sorted.map((item) => {
-          const iconEntry = opportunityIconMap[item.icon];
+          // 🚀 THE FIX: Provide a safe fallback object if the map returns undefined
+          const iconEntry = opportunityIconMap[item.icon] || {
+            icon: HelpCircle,
+            bg: "bg-ink-100",
+            fg: "text-ink-500",
+          };
+
           const Icon = iconEntry.icon;
+
           return (
             <Card key={item.id} className="flex flex-col gap-4 sm:flex-row sm:items-center">
               <div className="flex flex-1 items-start gap-3.5">
                 <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-ink-900 text-[13px] font-bold text-white">
                   {item.rank}
                 </div>
+                {/* Because of the fallback, iconEntry.bg and <Icon/> will ALWAYS exist */}
                 <div className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-lg ${iconEntry.bg}`}>
                   <Icon size={17} className={iconEntry.fg} />
                 </div>
