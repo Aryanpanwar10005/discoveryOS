@@ -16,6 +16,7 @@ import {
   UploadCloud,
 } from "lucide-react";
 import { cn } from "@/lib/cn";
+import { ProjectSwitcher } from "@/components/project-switcher";
 
 const primaryNav = [
   { label: "Overview", href: "/", icon: LayoutDashboard },
@@ -26,13 +27,6 @@ const primaryNav = [
   { label: "Upload History", href: "/uploads", icon: UploadCloud },
   { label: "Reports", href: "/reports", icon: FileText },
   { label: "AI Agents", href: "/ai-agents", icon: Bot },
-];
-
-const projects = [
-  { name: "FitWardrobe", href: "/", active: true },
-  { name: "StudyBuddy", href: "#" },
-  { name: "MealMate", href: "#" },
-  { name: "WorkFlowPro", href: "#" },
 ];
 
 const agentStatus = [
@@ -85,32 +79,9 @@ export function Sidebar() {
             );
           })}
         </ul>
-
         <div className="mt-6 px-3">
-          <p className="mb-2 text-[11px] font-semibold uppercase tracking-wide text-ink-400">Projects</p>
-          <ul className="flex flex-col gap-0.5">
-            {projects.map((project) => (
-              <li key={project.name}>
-                <Link
-                  href={project.href}
-                  className={cn(
-                    "flex items-center gap-2.5 rounded-lg px-3 py-1.5 text-[13.5px] transition-colors",
-                    project.active
-                      ? "bg-brand-50 font-medium text-brand-700"
-                      : "text-ink-600 hover:bg-ink-50 hover:text-ink-900"
-                  )}
-                >
-                  <span
-                    className={cn(
-                      "h-1.5 w-1.5 rounded-full",
-                      project.active ? "bg-brand-600" : "bg-ink-300"
-                    )}
-                  />
-                  {project.name}
-                </Link>
-              </li>
-            ))}
-          </ul>
+          <p className="mb-3 text-[11px] font-semibold uppercase tracking-wide text-ink-400">Current Project</p>
+          <ProjectSwitcher />
         </div>
       </nav>
 

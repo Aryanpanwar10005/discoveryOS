@@ -4,13 +4,17 @@ import { agentIconMap } from "@/components/icon-maps";
 import { Zap, Clock3 } from "lucide-react";
 import type { AgentRecord } from "@/types";
 import { cn } from "@/lib/cn";
+import { HelpCircle, Icon } from 'lucide-react';
 
 const statusTone: Record<AgentRecord["status"], "green" | "gray" | "red" | "blue"> = {
   active: "green",
   idle: "gray",
   running: "blue",
   error: "red",
+
 };
+
+const IconToRender = Icon || HelpCircle;
 
 function timeAgoFromISO(iso: string): string {
   const diffMs = Date.now() - new Date(iso).getTime();
@@ -30,7 +34,7 @@ export function AgentCard({ agent }: { agent: AgentRecord }) {
       <div className="flex items-start justify-between">
         <div className="flex items-center gap-3">
           <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-brand-100">
-            <Icon size={19} className="text-brand-600" />
+           {/* <IconToRender size={19} className="text-brand-600" /> */}
           </div>
           <div>
             <p className="text-[14.5px] font-semibold text-ink-900">{agent.name}</p>

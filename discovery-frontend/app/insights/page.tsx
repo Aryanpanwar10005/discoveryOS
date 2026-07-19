@@ -1,13 +1,16 @@
 "use client";
 
 import { Topbar } from "@/components/layout/Topbar";
+import { ProjectSwitcher } from "@/components/project-switcher";
 import { Card } from "@/components/ui/Card";
 import { InsightsExplorer } from "@/components/insights/InsightsExplorer";
 import { insightTypeIconMap } from "@/components/icon-maps";
 import { getInsights } from "@/lib/api";
-import type { InsightType } from "@/types";
+import { useCurrentProject } from "@/lib/project-context";
+import type { InsightType, InsightsResponse } from "@/types";
 import { useState, useEffect } from "react";
 import { UploadModalEnhanced } from "@/components/ui/UploadModalEnhanced";
+
 import { CardSkeleton, Skeleton } from "@/components/ui/Skeleton";
 import { FadeIn } from "@/components/ui/FadeIn";
 import { AlertTriangle, RefreshCw } from "lucide-react";
@@ -15,8 +18,9 @@ import { AlertTriangle, RefreshCw } from "lucide-react";
 export const dynamic = "force-dynamic";
 
 export default function InsightsPage() {
+  const { projectId } = useCurrentProject();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [data, setData] = useState<any>(null);
+  const [data, setData] = useState<InsightsResponse | null>(null);
   const [loading, setLoading] = useState(true);
 
   async function fetchData() {
@@ -31,7 +35,7 @@ export default function InsightsPage() {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [projectId]);
 
   if (loading) {
     return (
@@ -89,7 +93,7 @@ export default function InsightsPage() {
     );
   }
 
-  const counts = (data.insights as { type: InsightType }[]).reduce<Record<InsightType, number>>(
+  const counts = data.insights.reduce<Record<InsightType, number>>(
     (acc, insight) => {
       acc[insight.type] = (acc[insight.type] ?? 0) + 1;
       return acc;
@@ -105,19 +109,24 @@ export default function InsightsPage() {
       <main className="flex-1 overflow-y-auto px-6 py-6">
         <div className="mx-auto flex max-w-[1400px] flex-col gap-6">
           <FadeIn>
-            <div>
-              <h1 className="text-[22px] font-bold tracking-tight text-ink-900">Insights</h1>
-              <p className="mt-1 text-[13.5px] text-ink-500">
-                <span className="font-semibold text-brand-600">{data.total.toLocaleString()}</span> insights extracted
-                from your research, sorted by recency
-              </p>
+            <div className="flex items-center justify-between">
+              <div>
+                <h1 className="text-[22px] font-bold tracking-tight text-ink-900">Insights</h1>
+                <p className="mt-1 text-[13.5px] text-ink-500">
+                  <span className="font-semibold text-brand-600">{data.total?.toLocaleString()}</span> insights extracted
+                  from your research, sorted by recency
+                </p>
+              </div>
+              <ProjectSwitcher />
             </div>
           </FadeIn>
 
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
             {(Object.keys(counts) as InsightType[]).map((type, i) => {
               const iconEntry = insightTypeIconMap[type];
-              const Icon = iconEntry.icon;
+              // Safely handle missing icon entries
+              if (!iconEntry) return null;
+              const Icon = iconEntry?.icon;
               return (
                 <FadeIn key={type} delay={i * 60}>
                   <Card className="group flex items-center gap-3 transition-all duration-200 hover:-translate-y-0.5">

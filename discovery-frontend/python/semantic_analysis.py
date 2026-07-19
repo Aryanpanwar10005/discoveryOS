@@ -88,6 +88,8 @@ def analyze_text(text: str, document_id: str = None, user_id: str = None, model_
         logger.info(f"⏱️  Start processing: {time.strftime('%Y-%m-%d %H:%M:%S')}")
         
         response = pipeline.process_with_discovery_os_format(request)
+
+        response = response.model_dump()
         
         processing_time = time.time() - start_time
         
@@ -170,10 +172,11 @@ def main():
     # Output JSON to stdout (important for Node.js parsing)
     logger.info("")
     logger.info("📤 Outputting results to stdout...")
+    logger.info(f"Result = {result}")
     print(json.dumps(result, indent=2))
     
     logger.info("")
-    if result.get("success"):
+    if result.get("status") == "success":
         logger.info("✅ Results sent to stdout")
         sys.exit(0)
     else:

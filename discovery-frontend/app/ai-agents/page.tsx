@@ -1,17 +1,50 @@
+"use client";
+
 import { Topbar } from "@/components/layout/Topbar";
+import { ProjectSwitcher } from "@/components/project-switcher";
 import { AgentCard } from "@/components/agents/AgentCard";
 import { AgentPipeline } from "@/components/dashboard/AgentPipeline";
 import { getAgents } from "@/lib/api";
-import { Settings2 } from "lucide-react";
+import { useCurrentProject } from "@/lib/project-context";
+import { useState, useEffect } from "react";
+import type { AgentsResponse } from "@/types";
 
 export const dynamic = "force-dynamic";
 
-export default async function AiAgentsPage() {
-  const data = await getAgents();
+export default function AiAgentsPage() {
+  const { projectId } = useCurrentProject();
+  const [data, setData] = useState<AgentsResponse | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function loadAgents() {
+      try {
+        const result = await getAgents();
+        setData(result);
+      } finally {
+        setLoading(false);
+      }
+    }
+    loadAgents();
+  }, [projectId]);
+
+  if (loading || !data) {
+    return (
+      <>
+        <Topbar breadcrumb="AI Agents" onAction={() => {}} />
+        <main className="flex-1 overflow-y-auto px-6 py-6">
+          <div>Loading...</div>
+        </main>
+      </>
+    );
+  }
 
   return (
     <>
-      <Topbar breadcrumb="AI Agents" actionLabel="Configure Agents" actionIcon={<Settings2 size={16} />} />
+      <Topbar breadcrumb="AI Agents" onAction={() => {}} />
+      <div className="absolute top-6 right-6">
+        <ProjectSwitcher />
+      </div>
 
       <main className="flex-1 overflow-y-auto px-6 py-6">
         <div className="mx-auto flex max-w-[1400px] flex-col gap-6">

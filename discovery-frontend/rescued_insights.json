@@ -1,7 +1,7 @@
 [
   {
     "type": "observation",
-    "text": "The project is named FitWardrobe.",
+    "text": "The project is named FitWardrobe Interview #1 (New User).",
     "confidence": 0.96,
     "source_sentence": "PROJECT: FitWardrobe Interview #1 (New User) - Checkout has too many steps",
     "related_insights": [],
@@ -9,15 +9,7 @@
   },
   {
     "type": "observation",
-    "text": "This is Interview #1.",
-    "confidence": 0.96,
-    "source_sentence": "PROJECT: FitWardrobe Interview #1 (New User) - Checkout has too many steps",
-    "related_insights": [],
-    "sentiment": "neutral"
-  },
-  {
-    "type": "observation",
-    "text": "The interview involves a new user.",
+    "text": "This is the first interview with a new user.",
     "confidence": 0.96,
     "source_sentence": "PROJECT: FitWardrobe Interview #1 (New User) - Checkout has too many steps",
     "related_insights": [],
@@ -33,8 +25,8 @@
   },
   {
     "type": "observation",
-    "text": "The user wants a guest checkout option.",
-    "confidence": 0.94,
+    "text": "The user wants to use guest checkout.",
+    "confidence": 0.93,
     "source_sentence": "Wants guest checkout",
     "related_insights": [],
     "sentiment": "neutral"
@@ -42,46 +34,38 @@
   {
     "type": "observation",
     "text": "Someone loves the onboarding quiz",
-    "confidence": 0.96,
+    "confidence": 0.94,
     "source_sentence": "Loves onboarding quiz",
     "related_insights": [],
     "sentiment": "positive"
   },
   {
     "type": "observation",
-    "text": "The interview is labeled as number 2.",
+    "text": "Interview #2 (Student)",
     "confidence": 0.97,
-    "source_sentence": "Interview #2 (Student) - Shipping cost shown at final step",
+    "source_sentence": "Interview #2 (Student)",
     "related_insights": [],
     "sentiment": "neutral"
   },
   {
     "type": "observation",
-    "text": "The interview participant is a student.",
-    "confidence": 0.97,
-    "source_sentence": "Interview #2 (Student) - Shipping cost shown at final step",
+    "text": "The shipping cost is displayed at the final step.",
+    "confidence": 0.96,
+    "source_sentence": "Shipping cost shown at final step",
     "related_insights": [],
     "sentiment": "neutral"
   },
   {
     "type": "observation",
-    "text": "The interview discusses that the shipping cost is shown at the final step.",
-    "confidence": 0.97,
-    "source_sentence": "Interview #2 (Student) - Shipping cost shown at final step",
+    "text": "The subject wants to make a payment using UPI.",
+    "confidence": 0.96,
+    "source_sentence": "Wants UPI payment",
     "related_insights": [],
     "sentiment": "neutral"
   },
   {
     "type": "observation",
-    "text": "Wants UPI payment",
-    "confidence": 0.93,
-    "source_sentence": "- Wants UPI payment",
-    "related_insights": [],
-    "sentiment": "neutral"
-  },
-  {
-    "type": "observation",
-    "text": "A support ticket exists with the identifier 1023.",
+    "text": "There is a support ticket numbered 1023.",
     "confidence": 0.96,
     "source_sentence": "Support Ticket #1023 - Payment failed without error",
     "related_insights": [],
@@ -89,7 +73,7 @@
   },
   {
     "type": "issue",
-    "text": "A payment associated with the ticket did not succeed.",
+    "text": "The payment associated with the ticket failed.",
     "confidence": 0.96,
     "source_sentence": "Support Ticket #1023 - Payment failed without error",
     "related_insights": [],
@@ -97,136 +81,24 @@
   },
   {
     "type": "observation",
-    "text": "The payment failure occurred without displaying an error message.",
+    "text": "The payment failure occurred without an error message.",
     "confidence": 0.96,
     "source_sentence": "Support Ticket #1023 - Payment failed without error",
     "related_insights": [],
-    "sentiment": "negative"
-  },
-  {
-    "type": "observation",
-    "text": "There is a delivery tracking system.",
-    "confidence": 0.94,
-    "source_sentence": "Delivery tracking outdated",
-    "related_insights": [],
     "sentiment": "neutral"
   },
   {
     "type": "observation",
-    "text": "The delivery tracking system is outdated.",
+    "text": "Delivery tracking is outdated",
     "confidence": 0.94,
-    "source_sentence": "Delivery tracking outdated",
+    "source_sentence": "- Delivery tracking outdated",
     "related_insights": [],
     "sentiment": "negative"
   },
   {
     "type": "observation",
-    "text": "A survey is a tool used to gather information from people.",
-    "confidence": 0.96,
-    "source_sentence": "Survey",
-    "related_insights": [],
-    "sentiment": "neutral"
-  },
-  {
-    "type": "observation",
-    "text": "Surveys often consist of a list of questions.",
-    "confidence": 0.96,
-    "source_sentence": "Survey",
-    "related_insights": [],
-    "sentiment": "neutral"
-  },
-  {
-    "type": "observation",
-    "text": "Respondents answer survey questions by selecting or writing responses.",
-    "confidence": 0.96,
-    "source_sentence": "Survey",
-    "related_insights": [],
-    "sentiment": "neutral"
-  },
-  {
-    "type": "observation",
-    "text": "Surveys can be administered on paper, online, by phone, or in person.",
-    "confidence": 0.96,
-    "source_sentence": "Survey",
-    "related_insights": [],
-    "sentiment": "neutral"
-  },
-  {
-    "type": "observation",
-    "text": "The purpose of a survey is to learn about opinions, behaviors, or facts.",
-    "confidence": 0.96,
-    "source_sentence": "Survey",
-    "related_insights": [],
-    "sentiment": "neutral"
-  },
-  {
-    "type": "observation",
-    "text": "Survey results are usually summarized using statistics such as averages or percentages.",
-    "confidence": 0.96,
-    "source_sentence": "Survey",
-    "related_insights": [],
-    "sentiment": "neutral"
-  },
-  {
-    "type": "observation",
-    "text": "A well\u2011designed survey uses clear, unbiased questions.",
-    "confidence": 0.96,
-    "source_sentence": "Survey",
-    "related_insights": [],
-    "sentiment": "positive"
-  },
-  {
-    "type": "observation",
-    "text": "Surveys can target a specific group (a sample) or the entire population.",
-    "confidence": 0.96,
-    "source_sentence": "Survey",
-    "related_insights": [],
-    "sentiment": "neutral"
-  },
-  {
-    "type": "observation",
-    "text": "The accuracy of a survey depends on how representative the sample is.",
-    "confidence": 0.96,
-    "source_sentence": "Survey",
-    "related_insights": [],
-    "sentiment": "neutral"
-  },
-  {
-    "type": "observation",
-    "text": "Survey data can be stored in spreadsheets or databases for later review.",
-    "confidence": 0.96,
-    "source_sentence": "Survey",
-    "related_insights": [],
-    "sentiment": "neutral"
-  },
-  {
-    "type": "observation",
-    "text": "Ethical surveys protect respondents' privacy and obtain consent.",
-    "confidence": 0.96,
-    "source_sentence": "Survey",
-    "related_insights": [],
-    "sentiment": "positive"
-  },
-  {
-    "type": "observation",
-    "text": "Surveys are commonly used in market research, academic studies, and public policy.",
-    "confidence": 0.96,
-    "source_sentence": "Survey",
-    "related_insights": [],
-    "sentiment": "neutral"
-  },
-  {
-    "type": "observation",
-    "text": "Guest Checkout is a checkout option that does not require the customer to create an account.",
-    "confidence": 0.96,
-    "source_sentence": "Guest Checkout",
-    "related_insights": [],
-    "sentiment": "neutral"
-  },
-  {
-    "type": "observation",
-    "text": "\"UPI Payments\" is a term referring to a type of payment system.",
-    "confidence": 0.96,
+    "text": "UPI Payments is a term that refers to a type of payment.",
+    "confidence": 0.97,
     "source_sentence": "UPI Payments",
     "related_insights": [],
     "sentiment": "neutral"
@@ -234,31 +106,47 @@
   {
     "type": "issue",
     "text": "The checkout process takes too long.",
-    "confidence": 0.94,
+    "confidence": 0.96,
     "source_sentence": "Checkout too long",
     "related_insights": [],
     "sentiment": "negative"
   },
   {
     "type": "issue",
-    "text": "The checkout flow is confusing.",
-    "confidence": 0.95,
+    "text": "Checkout flow is confusing",
+    "confidence": 0.96,
     "source_sentence": "Checkout flow is confusing",
     "related_insights": [],
     "sentiment": "negative"
   },
   {
-    "type": "question",
-    "text": "The speaker asks whether prices include GST.",
-    "confidence": 0.98,
-    "source_sentence": "Do prices include GST?",
+    "type": "observation",
+    "text": "Support Call is a phrase.",
+    "confidence": 0.97,
+    "source_sentence": "Support Call",
     "related_insights": [],
     "sentiment": "neutral"
   },
   {
     "type": "question",
-    "text": "The user asks whether they can exchange a product for a different size without returning the original item.",
-    "confidence": 0.97,
+    "text": "Someone is asking whether prices include GST",
+    "confidence": 0.96,
+    "source_sentence": "Do prices include GST?",
+    "related_insights": [],
+    "sentiment": "neutral"
+  },
+  {
+    "type": "request",
+    "text": "The speaker wants to exchange a product for a different size.",
+    "confidence": 0.96,
+    "source_sentence": "Can I exchange size without return?",
+    "related_insights": [],
+    "sentiment": "neutral"
+  },
+  {
+    "type": "question",
+    "text": "The speaker wants to make the size exchange without returning the original item.",
+    "confidence": 0.96,
     "source_sentence": "Can I exchange size without return?",
     "related_insights": [],
     "sentiment": "neutral"
