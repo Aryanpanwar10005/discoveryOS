@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { supabase } from "@/lib/supabase";
+import { mergeProjectAnalysis } from "@/lib/mergeProjectAnalysis";
 
 /**
  * GET /api/extracted
@@ -68,6 +69,7 @@ export async function GET(req: NextRequest) {
     query = query.range(offset, offset + limit - 1);
 
     const { data, error, count } = await query;
+    const mergedAnalysis = mergeProjectAnalysis(data || []);
 
     if (error) {
       console.error("Database query error:", error);
@@ -77,12 +79,17 @@ export async function GET(req: NextRequest) {
       );
     }
 
+    const rows =
+      data && data.length > 1
+        ? [mergeProjectAnalysis(data)]
+        : (data ?? []);
+
     return NextResponse.json({
       success: true,
       total: count || 0,
       limit,
       offset,
-      rows: data || [],
+      rows,
       filters: {
         status: status || null,
         search: search || null,

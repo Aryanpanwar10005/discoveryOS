@@ -2,7 +2,6 @@
 
 import { Bell, HelpCircle, ChevronDown, Plus } from "lucide-react";
 import { Button } from "@/components/ui/Button";
-import { ProjectSwitcher } from "@/components/project-switcher";
 import type { ReactNode } from "react";
 import {useState} from "react"
 
@@ -29,6 +28,7 @@ export function Topbar({
         <ChevronDown size={16} className="text-ink-400" />
       </button>
 
+   
       <div className="flex items-center gap-3">
         {rightSlot}
         {actionLabel && onAction && (
@@ -36,7 +36,6 @@ export function Topbar({
             {actionLabel}
           </Button>
         )}
-
         <button
           aria-label="Notifications"
           className="relative flex h-9 w-9 items-center justify-center rounded-lg text-ink-500 transition-colors hover:bg-ink-50 hover:text-ink-800"
