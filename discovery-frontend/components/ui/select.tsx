@@ -112,7 +112,12 @@ interface SelectValueProps {
 export function SelectValue({ placeholder = "Select an option", children }: SelectValueProps) {
   const { value } = useSelectContext();
 
-  // If children are provided as a render prop function, use them
+  // If children are provided as render prop, use them
+  if (children && typeof children === 'function') {
+    return <>{children(value)}</>;
+  }
+
+  // If children are valid elements, render them
   if (children) {
     return <>{children}</>;
   }
