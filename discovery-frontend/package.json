@@ -6,17 +6,21 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "worker": "node --require ts-node/register lib/bull-queue.ts"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.110.7",
+    "bull": "^4.14.0",
     "lucide-react": "^1.25.0",
     "next": "16.2.10",
+    "redis": "^4.6.0",
     "react": "19.2.4",
     "react-dom": "19.2.4"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
+    "@types/bull": "^4.10.0",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
@@ -25,6 +29,7 @@
     "eslint-config-next": "16.2.10",
     "postcss": "^8.5.19",
     "tailwindcss": "^4.3.3",
+    "ts-node": "^10.9.0",
     "typescript": "^5"
   }
 }

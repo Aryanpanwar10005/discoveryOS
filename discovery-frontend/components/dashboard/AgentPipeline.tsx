@@ -15,7 +15,7 @@ export function AgentPipeline({ steps }: { steps: PipelineStep[] }) {
     <Card>
       <CardHeader title="AI Agent Pipeline" />
       <div className="flex flex-col gap-3 sm:flex-row sm:items-stretch sm:gap-3">
-        {steps.map((step, idx) => {
+        {steps?.map((step, idx) => {
           const config = statusConfig[step.status];
           const Icon = config.icon;
           return (

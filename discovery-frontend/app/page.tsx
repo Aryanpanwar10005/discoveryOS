@@ -1,4 +1,7 @@
+"use client";
 import { Topbar } from "@/components/layout/Topbar";
+import { useUnifiedDashboard } from "@/lib/unified-dashboard-context";
+import { FadeIn } from "@/components/ui/FadeIn";
 import { StatCardView } from "@/components/dashboard/StatCardView";
 import { TopPainPoints } from "@/components/dashboard/TopPainPoints";
 import { PainPointMatrixCard } from "@/components/dashboard/PainPointMatrixCard";
@@ -7,53 +10,101 @@ import { TopOpportunities } from "@/components/dashboard/TopOpportunities";
 import { InsightsBySegment } from "@/components/dashboard/InsightsBySegment";
 import { AiRecommendationCard } from "@/components/dashboard/AiRecommendationCard";
 import { AgentPipeline } from "@/components/dashboard/AgentPipeline";
-import { SprintSelector } from "@/components/dashboard/SprintSelector";
-import { getOverview } from "@/lib/api";
 
-export const dynamic = "force-dynamic";
+export default function Dashboard() {
+  const { data, loading, error } = useUnifiedDashboard();
 
-export default async function OverviewPage() {
-  const data = await getOverview();
+  if (loading) {
+    return (
+      <div className="flex h-screen flex-col">
+        <Topbar breadcrumb="Dashboard" />
+        <div className="flex-1 overflow-auto bg-ink-50 p-6">
+          <div className="text-center text-ink-500">Loading dashboard...</div>
+        </div>
+      </div>
+    );
+  }
+
+  if (error || !data) {
+    return (
+      <div className="flex h-screen flex-col">
+        <Topbar breadcrumb="Dashboard" />
+        <div className="flex-1 overflow-auto bg-ink-50 p-6">
+          <div className="rounded-lg bg-danger-50 p-4 text-danger-700">
+            Error loading dashboard: {error ?? "No data returned"}
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <>
-      <Topbar breadcrumb={`${data.project.name} – Product Discovery`} />
-
-      <main className="flex-1 overflow-y-auto px-6 py-6">
-        <div className="mx-auto flex max-w-[1400px] flex-col gap-6">
-          <div className="flex flex-wrap items-center justify-between gap-3">
-            <div>
-              <h1 className="text-[22px] font-bold text-ink-900">
-                Good morning, {data.user.name} 👋
+    <div className="flex h-screen flex-col">
+      <Topbar breadcrumb="Dashboard" />
+      <main className="flex-1 overflow-auto bg-ink-50">
+        <div className="mx-auto max-w-7xl space-y-6 px-6 py-8">
+          <FadeIn>
+            <div className="space-y-2">
+              <h1 className="text-3xl font-bold text-ink-900">
+                {data.sprintLabel}
               </h1>
-              <p className="mt-1 text-[13.5px] text-ink-500">
-                Here&apos;s what our AI found from your customer research
-              </p>
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-[15px] text-ink-600">
+                    Good morning,{" "}
+                    <span className="bg-gradient-to-r from-brand-600 to-brand-400 bg-clip-text text-transparent">
+                      {data.user.name}
+                    </span>{" "}
+                    <span className="inline-block animate-float">👋</span>
+                  </p>
+                </div>
+              </div>
             </div>
-            <SprintSelector label={data.sprintLabel} />
-          </div>
+          </FadeIn>
 
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
-            {data.stats.map((stat) => (
-              <StatCardView key={stat.id} stat={stat} />
+            {data.stats.map((stat, i) => (
+              <FadeIn key={stat.id} delay={i * 60} className="h-full">
+                <div className="h-full transition-transform duration-200 hover:-translate-y-0.5">
+                  <StatCardView stat={stat} />
+                </div>
+              </FadeIn>
             ))}
           </div>
 
           <div className="grid grid-cols-1 gap-4 lg:grid-cols-[1.1fr_1.4fr_1fr]">
-            <TopPainPoints items={data.topPainPoints} />
-            <PainPointMatrixCard data={data.painPointMatrix} />
-            <RecentInsights items={data.recentInsights} />
+            <FadeIn delay={40}>
+              <TopPainPoints items={data.topPainPoints} />
+            </FadeIn>
+
+            <FadeIn delay={50}>
+              <PainPointMatrixCard items={data.painPointMatrix} />
+            </FadeIn>
+
+            <FadeIn delay={60}>
+              <RecentInsights items={data.recentInsights} />
+            </FadeIn>
           </div>
 
-          <div className="grid grid-cols-1 gap-4 lg:grid-cols-[1.3fr_1fr_1fr]">
-            <TopOpportunities items={data.topOpportunities} />
-            <InsightsBySegment data={data.insightsBySegment} />
-            <AiRecommendationCard data={data.aiRecommendation} />
+          <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+            <FadeIn delay={70}>
+              <TopOpportunities items={data.topOpportunities} />
+            </FadeIn>
+
+            <FadeIn delay={80}>
+              <InsightsBySegment data={data.insightsBySegment} />
+            </FadeIn>
           </div>
 
-          <AgentPipeline steps={data.agentPipeline} />
+          <FadeIn delay={90}>
+            <AiRecommendationCard item={data.aiRecommendation} />
+          </FadeIn>
+
+          <FadeIn delay={100}>
+            <AgentPipeline items={data.agentPipeline} />
+          </FadeIn>
         </div>
       </main>
-    </>
+    </div>
   );
 }

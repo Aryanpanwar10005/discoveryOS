@@ -79,7 +79,7 @@ export function BubbleMatrix({ data }: BubbleMatrixProps) {
         </text>
 
         {/* bubbles */}
-        {data.map((d) => {
+        {data?.map((d) => {
           const cx = toX(d.frequency);
           const cy = toY(d.impact);
           const r = toR(d.size);

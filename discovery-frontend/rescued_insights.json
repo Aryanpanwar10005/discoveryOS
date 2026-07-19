@@ -1,0 +1,154 @@
+[
+  {
+    "type": "observation",
+    "text": "The project is named FitWardrobe Interview #1 (New User).",
+    "confidence": 0.96,
+    "source_sentence": "PROJECT: FitWardrobe Interview #1 (New User) - Checkout has too many steps",
+    "related_insights": [],
+    "sentiment": "neutral"
+  },
+  {
+    "type": "observation",
+    "text": "This is the first interview with a new user.",
+    "confidence": 0.96,
+    "source_sentence": "PROJECT: FitWardrobe Interview #1 (New User) - Checkout has too many steps",
+    "related_insights": [],
+    "sentiment": "neutral"
+  },
+  {
+    "type": "issue",
+    "text": "The checkout process has too many steps.",
+    "confidence": 0.96,
+    "source_sentence": "PROJECT: FitWardrobe Interview #1 (New User) - Checkout has too many steps",
+    "related_insights": [],
+    "sentiment": "negative"
+  },
+  {
+    "type": "observation",
+    "text": "The user wants to use guest checkout.",
+    "confidence": 0.93,
+    "source_sentence": "Wants guest checkout",
+    "related_insights": [],
+    "sentiment": "neutral"
+  },
+  {
+    "type": "observation",
+    "text": "Someone loves the onboarding quiz",
+    "confidence": 0.94,
+    "source_sentence": "Loves onboarding quiz",
+    "related_insights": [],
+    "sentiment": "positive"
+  },
+  {
+    "type": "observation",
+    "text": "Interview #2 (Student)",
+    "confidence": 0.97,
+    "source_sentence": "Interview #2 (Student)",
+    "related_insights": [],
+    "sentiment": "neutral"
+  },
+  {
+    "type": "observation",
+    "text": "The shipping cost is displayed at the final step.",
+    "confidence": 0.96,
+    "source_sentence": "Shipping cost shown at final step",
+    "related_insights": [],
+    "sentiment": "neutral"
+  },
+  {
+    "type": "observation",
+    "text": "The subject wants to make a payment using UPI.",
+    "confidence": 0.96,
+    "source_sentence": "Wants UPI payment",
+    "related_insights": [],
+    "sentiment": "neutral"
+  },
+  {
+    "type": "observation",
+    "text": "There is a support ticket numbered 1023.",
+    "confidence": 0.96,
+    "source_sentence": "Support Ticket #1023 - Payment failed without error",
+    "related_insights": [],
+    "sentiment": "neutral"
+  },
+  {
+    "type": "issue",
+    "text": "The payment associated with the ticket failed.",
+    "confidence": 0.96,
+    "source_sentence": "Support Ticket #1023 - Payment failed without error",
+    "related_insights": [],
+    "sentiment": "negative"
+  },
+  {
+    "type": "observation",
+    "text": "The payment failure occurred without an error message.",
+    "confidence": 0.96,
+    "source_sentence": "Support Ticket #1023 - Payment failed without error",
+    "related_insights": [],
+    "sentiment": "neutral"
+  },
+  {
+    "type": "observation",
+    "text": "Delivery tracking is outdated",
+    "confidence": 0.94,
+    "source_sentence": "- Delivery tracking outdated",
+    "related_insights": [],
+    "sentiment": "negative"
+  },
+  {
+    "type": "observation",
+    "text": "UPI Payments is a term that refers to a type of payment.",
+    "confidence": 0.97,
+    "source_sentence": "UPI Payments",
+    "related_insights": [],
+    "sentiment": "neutral"
+  },
+  {
+    "type": "issue",
+    "text": "The checkout process takes too long.",
+    "confidence": 0.96,
+    "source_sentence": "Checkout too long",
+    "related_insights": [],
+    "sentiment": "negative"
+  },
+  {
+    "type": "issue",
+    "text": "Checkout flow is confusing",
+    "confidence": 0.96,
+    "source_sentence": "Checkout flow is confusing",
+    "related_insights": [],
+    "sentiment": "negative"
+  },
+  {
+    "type": "observation",
+    "text": "Support Call is a phrase.",
+    "confidence": 0.97,
+    "source_sentence": "Support Call",
+    "related_insights": [],
+    "sentiment": "neutral"
+  },
+  {
+    "type": "question",
+    "text": "Someone is asking whether prices include GST",
+    "confidence": 0.96,
+    "source_sentence": "Do prices include GST?",
+    "related_insights": [],
+    "sentiment": "neutral"
+  },
+  {
+    "type": "request",
+    "text": "The speaker wants to exchange a product for a different size.",
+    "confidence": 0.96,
+    "source_sentence": "Can I exchange size without return?",
+    "related_insights": [],
+    "sentiment": "neutral"
+  },
+  {
+    "type": "question",
+    "text": "The speaker wants to make the size exchange without returning the original item.",
+    "confidence": 0.96,
+    "source_sentence": "Can I exchange size without return?",
+    "related_insights": [],
+    "sentiment": "neutral"
+  }
+]
