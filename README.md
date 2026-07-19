@@ -25,4 +25,6 @@ pnpm build
 pnpm dev
 ```
 
+Copy `.env.example` to `.env` and add your `GEMINI_API_KEY` (get from https://ai.google.dev/api/rest).
+
 See individual folder READMEs for detailed setup per service.
