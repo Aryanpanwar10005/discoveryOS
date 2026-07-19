@@ -42,9 +42,7 @@ export default function AiAgentsPage() {
   return (
     <>
       <Topbar breadcrumb="AI Agents" onAction={() => {}} />
-      <div className="absolute top-6 right-6">
-        <ProjectSwitcher />
-      </div>
+     
 
       <main className="flex-1 overflow-y-auto px-6 py-6">
         <div className="mx-auto flex max-w-[1400px] flex-col gap-6">

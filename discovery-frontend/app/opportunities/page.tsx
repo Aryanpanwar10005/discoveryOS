@@ -50,11 +50,7 @@ export default function OpportunitiesPage() {
   return (
     <>
       <Topbar breadcrumb="Opportunities" onAction={() => {}} />
-      <div className="absolute top-6 right-6">
-        <ProjectSwitcher />
-      </div>
-
-      <Topbar breadcrumb="Opportunities" actionLabel="New Opportunity" />
+     
 
       <main className="flex-1 overflow-y-auto px-6 py-6">
         <div className="mx-auto flex max-w-[1400px] flex-col gap-6">
