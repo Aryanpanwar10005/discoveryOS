@@ -125,4 +125,4 @@ cd apps/web && pnpm dev
 
 ## License
 
-Proprietary — All rights reserved.
+MIT. See the [LICENSE](../LICENSE) file in the repository root.

@@ -85,6 +85,10 @@ This is an early prototype, not a finished product. Known gaps:
 - **Aryan Panwar:** monorepo setup, `packages/core`, `packages/ingestion`, `packages/ai-engine` and the Supabase schema.
 - **[Abhishek Gurjar](https://github.com/AbhishekGurjar2):** the Next.js frontend, the upload API, Python text extraction and the LangGraph analysis pipeline.
 
+## License
+
+MIT, see [LICENSE](LICENSE).
+
 ---
 
 Built by [Aryan Panwar](https://aryanpanwar.in) and [Abhishek Gurjar](https://github.com/AbhishekGurjar2).
